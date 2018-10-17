@@ -10,15 +10,11 @@
           <i class="iconfont icon-email"></i>
         </div>
         <div class="sign-input-item">
-          <input type="tel" placeholder="联系方式" name="" id="">
-          <i class="iconfont icon-contacts"></i>
-        </div>
-        <div class="sign-input-item">
           <input type="tel" placeholder="登陆密码" name="" id="">
           <i class="iconfont icon-lock"></i>
         </div>
       </div>
-      <button @click="goWhere()">注册</button>
+      <button @click="goWhere">登录</button>
     </div>
   </div>
 </template>
@@ -41,10 +37,7 @@ export default {
     this.logo = Config.logo
   },
   methods: {
-    goWhere (path) {
-      console.log(this.$router)
-      this.$router.push('/login')
-    }
+    goWhere () { }
   }
 
 }
