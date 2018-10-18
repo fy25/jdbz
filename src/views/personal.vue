@@ -1,0 +1,217 @@
+<template>
+  <div class="personal">
+    <div class="personal-panel">
+      <div class="personal-panel-left">
+        <img src="@/assets/logo.png" alt="">
+        <div>
+          <strong>我不是德布劳内</strong>
+          <span>积分100</span>
+        </div>
+      </div>
+      <div class="personal-panel-right">
+        <strong>200.00</strong>
+        <span>余额</span>
+      </div>
+    </div>
+    <div class="personal-share">
+      <div class="personal-share-item">
+        <div class="personal-share-left">
+          <div>
+            <strong>分享好友</strong>
+            <img src="@/assets/images/hot.png" alt="">
+          </div>
+          <span>分享好友得佣金</span>
+        </div>
+        <i class="iconfont icon-email"></i>
+      </div>
+      <div class="personal-share-line"></div>
+      <div class="personal-share-item">
+        <div class="personal-share-left">
+          <div>
+            <strong>付款吗</strong>
+          </div>
+          <span>充值更优惠</span>
+        </div>
+        <i class="iconfont icon-email"></i>
+      </div>
+    </div>
+    <div class="personal-tab">
+      <div class="personal-tab-tit">
+        <div class="personal-tab-tit-left">
+          <strong>我的钱包</strong>
+          <span>MY WALLET</span>
+        </div>
+        <div class="personal-tab-tit-right">
+          <span>我的账单</span>
+          <i class="iconfont icon-email"></i>
+        </div>
+      </div>
+      <div class="personal-tab-wrapper">
+        <div class="personal-tab-wrapper-item">
+          <i class="iconfont icon-email"></i>
+          <strong>我的储值</strong>
+        </div>
+        <div class="personal-tab-wrapper-item">
+          <i class="iconfont icon-email"></i>
+          <strong>我的储值</strong>
+        </div>
+        <div class="personal-tab-wrapper-item">
+          <i class="iconfont icon-email"></i>
+          <strong>我的储值</strong>
+        </div>
+        <div class="personal-tab-wrapper-item">
+          <i class="iconfont icon-email"></i>
+          <strong>我的储值</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style lang="less" scoped>
+.personal-panel {
+  background-color: @main-color;
+  height: 3.25rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  color: #ffffff;
+  .personal-panel-left {
+    display: flex;
+    align-items: center;
+    img {
+      width: 1.28rem;
+      height: 1.28rem;
+      border-radius: 50%;
+      overflow: hidden;
+      margin-right: 0.3rem;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      strong {
+        font-size: 0.38rem;
+        margin-bottom: 0.15rem;
+      }
+      span {
+        font-size: 0.24rem;
+      }
+    }
+  }
+  .personal-panel-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    strong {
+      font-size: 0.48rem;
+      margin-bottom: 0.15rem;
+    }
+    span {
+      font-size: 0.24rem;
+    }
+  }
+}
+.personal-share {
+  background-color: #c13339;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  padding: 0.17rem 0;
+  .personal-share-item {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.1rem 0.28rem 0.1rem 0.46rem;
+    box-sizing: border-box;
+    .personal-share-left {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.15rem;
+        img {
+          width: 0.6rem;
+          height: 0.3rem;
+          margin-left: 0.15rem;
+        }
+      }
+      strong {
+        font-size: 0.25rem;
+      }
+      span {
+        font-size: 0.2rem;
+      }
+    }
+  }
+  .personal-share-line {
+    width: 1px;
+    height: 1rem;
+    background-color: #fff;
+    transform: scaleX(0.5);
+  }
+}
+.personal-tab{
+  margin-top: 0.2rem;
+  width: 100%;
+  background-color: #fff;
+  padding: 0.36rem 0.6rem;
+  box-sizing: border-box;
+  .personal-tab-tit{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    .personal-tab-tit-left{
+      display: flex;
+      align-items: center;
+      strong{
+        font-size: 0.26rem;
+        color: #000;
+        font-weight: 700;
+      }
+      span{
+        font-size: 0.2rem;
+        color: #000;
+        margin-left: 0.2rem;
+      }
+    }
+    .personal-tab-tit-right{
+      display: flex;
+      align-items: center;
+      color: #A8A8A8;
+      span{
+        font-size: 0.2rem;
+      }
+    }
+  }
+  .personal-tab-wrapper{
+    display: flex;
+    align-items: center;
+    .personal-tab-wrapper-item{
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      strong{
+        font-size: 0.24rem;
+        color: #474747;
+        margin-top: 0.2rem;
+      }
+      i{
+        font-size: 0.6rem;
+      }
+    }
+  }
+}
+</style>
+
+<script>
+export default {
+
+}
+</script>
+
+
