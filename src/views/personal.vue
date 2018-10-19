@@ -65,6 +65,30 @@
         </div>
       </div>
     </div>
+    <div class="personal-activity">
+      <div class="personal-activity-top">
+          <strong>商家优惠活动</strong>
+          <span class="uppercase">Merciless activity</span>
+      </div>
+      <div class="personal-activity-tit" @click="show = !show">
+        <div class="personal-activity-tit-left">
+          <img src="@/assets/images/favourable.png" alt="">
+          <span>玖鼎坝子注册会员首单全场菜品五折吃</span>
+        </div>
+        <i class="iconfont icon-email"></i>
+      </div>
+      <transition name="slide-fade">
+        <div v-if="show" class="personal-activity-content">
+        dadadadasd
+      </div>
+      </transition>
+    </div>
+    <div class="personal-contact">
+      <div class="personal-contact-tit">
+        <span>门店及电话</span>
+        <i class="icon icon-email"></i>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -155,62 +179,130 @@
     transform: scaleX(0.5);
   }
 }
-.personal-tab{
+.personal-tab {
   margin-top: 0.2rem;
   width: 100%;
   background-color: #fff;
   padding: 0.36rem 0.6rem;
   box-sizing: border-box;
-  .personal-tab-tit{
+  .personal-tab-tit {
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
-    .personal-tab-tit-left{
+    .personal-tab-tit-left {
       display: flex;
       align-items: center;
-      strong{
+      strong {
         font-size: 0.26rem;
         color: #000;
         font-weight: 700;
       }
-      span{
+      span {
         font-size: 0.2rem;
         color: #000;
         margin-left: 0.2rem;
       }
     }
-    .personal-tab-tit-right{
+    .personal-tab-tit-right {
       display: flex;
       align-items: center;
-      color: #A8A8A8;
-      span{
+      color: #a8a8a8;
+      span {
         font-size: 0.2rem;
       }
     }
   }
-  .personal-tab-wrapper{
+  .personal-tab-wrapper {
     display: flex;
     align-items: center;
-    .personal-tab-wrapper-item{
+    .personal-tab-wrapper-item {
       flex: 1;
       display: flex;
       flex-direction: column;
-      strong{
+      strong {
         font-size: 0.24rem;
         color: #474747;
         margin-top: 0.2rem;
       }
-      i{
+      i {
         font-size: 0.6rem;
       }
     }
   }
 }
+.personal-activity {
+  margin-top: 0.2rem;
+  .personal-activity-top {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    height: 0.9rem;
+    padding: 0 0.6rem;
+    box-sizing: border-box;
+    strong {
+      font-size: 0.26rem;
+      color: #000;
+      font-weight: 700;
+    }
+    span {
+      font-size: 0.2rem;
+      color: #000;
+      margin-left: 0.2rem;
+    }
+  }
+  .personal-activity-tit {
+    background-color: #fff;
+    height: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.6rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+    .personal-activity-tit-left {
+      display: flex;
+      align-items: center;
+      img {
+        width: 0.38rem;
+        height: 0.38rem;
+        margin-right: 0.15rem;
+      }
+      span {
+        font-size: 0.24rem;
+      }
+    }
+  }
+  .personal-activity-content {
+    font-size: 0.28rem;
+    background-color: #f7f7f7;
+    padding: 0.6rem;
+    box-sizing: border-box;
+  }
+}
+.personal-contact{
+  
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>
 
 <script>
 export default {
-
+  data () {
+    return {
+      show: true
+    }
+  }
 }
 </script>
 

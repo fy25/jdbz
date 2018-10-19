@@ -20,4 +20,7 @@ export default {
   background-color: #F7F7F7;
   min-height: 100vh;
 }
+.uppercase{
+  text-transform: uppercase;
+}
 </style>
