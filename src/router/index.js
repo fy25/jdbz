@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Sign from '@/views/sign'
 import Login from '@/views/login'
 import Personal from '@/views/personal'
+import Bill from '@/views/bill'
 
 Vue.use(Router)
 
@@ -23,6 +24,11 @@ export default new Router({
       path: '/personal',
       name: 'Personal',
       component: Personal
+    },
+    {
+      path: '/bill',
+      name: 'Bill',
+      component: Bill
     },
   ]
 })

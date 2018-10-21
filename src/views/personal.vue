@@ -86,8 +86,22 @@
     <div class="personal-contact">
       <div class="personal-contact-tit">
         <span>门店及电话</span>
-        <i class="icon icon-email"></i>
+        <i class="iconfont icon-email"></i>
       </div>
+      <div class="personal-contact-content">
+        <div class="personal-contact-content-left">
+          <strong>玖鼎坝子火锅店（徐州店）</strong>
+          <span>泉山区矿山路枫林绿洲6-1-107</span>
+          <strong>18288288282</strong>
+        </div>
+        <div class="personal-contact-content-right">
+          <img src="../assets/images/tel.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="personal-ad">
+      <p>禾界网络提供技术支持</p>
+      <p>15162153777</p>
     </div>
   </div>
 </template>
@@ -279,8 +293,50 @@
     box-sizing: border-box;
   }
 }
-.personal-contact{
-  
+.personal-contact {
+  .personal-contact-tit {
+    background-color: #fff;
+    height: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.6rem;
+    box-sizing: border-box;
+    border-bottom: 1px solid #cccccc;
+    span {
+      font-size: 0.24rem;
+    }
+  }
+  .personal-contact-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.4rem;
+    box-sizing: border-box;
+    .personal-contact-content-left {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.26rem;
+      align-items: flex-start;
+      justify-content: center;
+      span {
+        margin: 0.28rem 0;
+      }
+    }
+    .personal-contact-content-right {
+      img {
+        width: 0.6rem;
+        height: 0.6rem;
+      }
+    }
+  }
+}
+.personal-ad{
+  background-color: #fff;
+  font-size: 0.18rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  text-align: center;
+  color: #ccc;
 }
 
 .slide-fade-enter-active {
