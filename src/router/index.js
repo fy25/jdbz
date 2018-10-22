@@ -4,6 +4,7 @@ import Sign from '@/views/sign'
 import Login from '@/views/login'
 import Personal from '@/views/personal'
 import Bill from '@/views/bill'
+import Recharge from '@/views/recharge'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/bill',
       name: 'Bill',
       component: Bill
+    },
+    {
+      path: '/recharge',
+      name: 'Recharge',
+      component: Recharge
     },
   ]
 })

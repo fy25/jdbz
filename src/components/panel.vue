@@ -5,8 +5,8 @@
         <span>当前余额（元）</span>
         <strong>19，254.20</strong>
       </div>
-      <div class="panel-right">
-        <div class="panel-right-radius">
+      <div class="panel-right" :hidden="!panelRight">
+        <div class="panel-right-radius" @click="goWhere(path)">
           <i class="iconfont icon-email"></i>
           <span>充值</span>
           <i class="iconfont icon-email"></i>
@@ -28,7 +28,7 @@
   padding-left: 0.2rem;
   box-sizing: border-box;
   border-radius: 10px;
-  box-shadow: 5px 5px 10px #dbdefc;
+  box-shadow: 0px 0px 10px #999;
   .panel-left {
     color: #fff;
     display: flex;
@@ -63,7 +63,22 @@
 
 <script>
 export default {
-
+  props: {
+    panelRight: {
+      type: Boolean,
+      default: false
+    },
+    path: {
+      type: String,
+      default: ''
+    },
+  },
+  methods: {
+    goWhere (path) {
+      console.log(path)
+      this.$router.push({ name: path })
+    }
+  }
 }
 </script>
 
