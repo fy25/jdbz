@@ -1,6 +1,6 @@
 <template>
   <div class="bill common-container">
-    <Panel :panel-right="panelRight" path="Recharge"></Panel>
+    <Panel :panel-right="panelRight" path="Recharge" tit="我的余额（元）" rightTit="充值"></Panel>
     <div class="bill-list">
       <div class="bill-item">
         <div class="bill-item-left">

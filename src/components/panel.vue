@@ -1,19 +1,17 @@
 <template>
-  <!-- <div> -->
     <div class="panel">
       <div class="panel-left">
-        <span>当前余额（元）</span>
+        <span>{{tit}}</span>
         <strong>19，254.20</strong>
       </div>
       <div class="panel-right" :hidden="!panelRight">
         <div class="panel-right-radius" @click="goWhere(path)">
           <i class="iconfont icon-email"></i>
-          <span>充值</span>
+          <span>{{rightTit}}</span>
           <i class="iconfont icon-email"></i>
         </div>
       </div>
     </div>
-  <!-- </div> -->
 </template>
 
 <style lang="less" scoped>
@@ -39,7 +37,7 @@
     }
     strong {
       font-size: 0.6rem;
-      margin-top: 0.6rem;
+      margin-top: 0.4rem;
     }
   }
   .panel-right {
@@ -72,6 +70,14 @@ export default {
       type: String,
       default: ''
     },
+    tit: {
+      type: String,
+      default: ''
+    },
+    rightTit: {
+      type: String,
+      default: ''
+    }
   },
   methods: {
     goWhere (path) {

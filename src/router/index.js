@@ -5,6 +5,8 @@ import Login from '@/views/login'
 import Personal from '@/views/personal'
 import Bill from '@/views/bill'
 import Recharge from '@/views/recharge'
+import Point from '@/views/point'
+import Exchange from '@/views/exchange'
 
 Vue.use(Router)
 
@@ -35,6 +37,16 @@ export default new Router({
       path: '/recharge',
       name: 'Recharge',
       component: Recharge
+    },
+    {
+      path: '/point',
+      name: 'Point',
+      component: Point
+    },
+    {
+      path: '/exchange',
+      name: 'Exchange',
+      component: Exchange
     },
   ]
 })
