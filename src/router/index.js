@@ -7,6 +7,9 @@ import Bill from '@/views/bill'
 import Recharge from '@/views/recharge'
 import Point from '@/views/point'
 import Exchange from '@/views/exchange'
+import Brokerage from '@/views/brokerage'
+import Withdraw from '@/views/withdraw'
+import Team from '@/views/team'
 
 Vue.use(Router)
 
@@ -48,5 +51,20 @@ export default new Router({
       name: 'Exchange',
       component: Exchange
     },
+    {
+      path: '/brokerage',
+      name: 'Brokerage',
+      component: Brokerage
+    },
+    {
+      path: '/withdraw',
+      name: 'Withdraw',
+      component: Withdraw
+    },
+    {
+      path: '/team',
+      name: 'Team',
+      component: Team
+    }
   ]
 })

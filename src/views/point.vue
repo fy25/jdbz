@@ -71,7 +71,7 @@
       height: 1rem;
       padding: 0 0.3rem;
       box-sizing: border-box;
-      border-bottom: 1px solid #D2D2D2;
+      border-bottom: 1px solid #d2d2d2;
       .point-item-left {
         display: flex;
         align-items: center;
@@ -84,12 +84,12 @@
           color: @main-color;
         }
       }
-      .point-item-right{
-        font-size: .24rem;
+      .point-item-right {
+        font-size: 0.24rem;
         color: #999;
       }
     }
-    .point-item:last-child{
+    .point-item:last-child {
       border-bottom: none;
     }
   }
