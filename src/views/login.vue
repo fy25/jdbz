@@ -14,30 +14,58 @@
           <i class="iconfont icon-lock"></i>
         </div>
       </div>
-      <button @click="goWhere">登录</button>
+      <button @click="goWhere('Personal')">登录</button>
     </div>
+    <div class="logo-forget">
+      <span @click="forgetTap">忘记密码</span>
+      <span @click="goWhere('Sign')">快速注册</span>
+    </div>
+    <Actionsheet v-model="actionShow" :menus="menus" show-cancel></Actionsheet>
   </div>
 </template>
 
 <style lang="less" scoped>
 @import "../assets/css/common.less";
 @import "../assets/css/sign.less";
+.logo-forget {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.24rem;
+  padding: 0 0.8rem;
+  box-sizing: border-box;
+  margin-top: 1rem;
+  color: #999;
+}
 </style>
 
 
 <script>
 import { Config } from '@/config/config.js'
+import { Actionsheet } from 'vux'
 export default {
   data () {
     return {
-      logo: ''
+      logo: '',
+      actionShow: false,
+      menus: [
+        '短信验证登录'
+      ]
     }
+  },
+  components: {
+    Actionsheet
   },
   mounted () {
     this.logo = Config.logo
   },
   methods: {
-    goWhere () { }
+    goWhere (name) {
+      this.$router.push({ name: name })
+    },
+    forgetTap () {
+      this.actionShow = true
+    }
   }
 
 }

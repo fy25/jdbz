@@ -82,7 +82,7 @@
   }
   .recharge-pay {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     span {
       font-size: 0.24rem;
     }

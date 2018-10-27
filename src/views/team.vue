@@ -17,26 +17,6 @@
         <strong>我的团队</strong>
         <span> MY FORT</span>
       </div>
-      <!-- <Scroller scrollbar-x :lock-y="lock">
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-          <img src="@/assets/logo.png" alt="">
-        </div>
-      </Scroller> -->
       <div class="team-list-item-container">
         <div class="team-list-item">
           <img src="@/assets/logo.png" alt="">
@@ -87,20 +67,42 @@
         <div class="team-list-item">
           <img src="@/assets/logo.png" alt="">
           <span>拉拉那</span>
+        </div>
+      </div>
+    </div>
+    <div class="team-record">
+      <div class="team-record-tit">消费记录</div>
+      <div class="team-record-list">
+        <div class="team-record-item">
+          <strong>川西白字消费100元</strong>
+          <span>09-24 13:33</span>
+        </div>
+        <div class="team-record-item">
+          <strong>川西白字消费100元</strong>
+          <span>09-24 13:33</span>
+        </div>
+        <div class="team-record-item">
+          <strong>川西白字消费100元</strong>
+          <span>09-24 13:33</span>
+        </div>
+        <div class="team-record-item">
+          <strong>川西白字消费100元</strong>
+          <span>09-24 13:33</span>
+        </div>
+        <div class="team-record-item">
+          <strong>川西白字消费100元</strong>
+          <span>09-24 13:33</span>
         </div>
       </div>
     </div>
 
-    <div class="jj">
-      <toast v-model="show" :time="time" type="cancel" width="4em" height="4em" text="去你的小杰瑞"></toast>
-    </div>
     
   </div>
 </template>
 
 <style lang="less" scoped>
-.weui-toast{
-  height: 4em!important;
+.weui-toast {
+  height: 4em !important;
 }
 .team {
   .personal-panel {
@@ -174,20 +176,50 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin: 0 20px;
+        margin: 0.5rem 0.3rem;
         img {
           width: 1rem;
           height: 1rem;
           border-radius: 50%;
         }
         span {
-          font-size: 0.3rem;
+          font-size: 0.2rem;
+          margin-top: 0.2rem;
         }
       }
     }
   }
-  .jj{
-    width: 12px;
+  .team-record{
+    padding: .5rem;
+    box-sizing: border-box;
+    background-color: #fff;
+    margin-top: .2rem;
+    .team-record-tit{
+      font-size: .32rem;
+      border-bottom: 1px solid #efefef;
+      padding: .3rem 0;
+      font-weight: 700;
+    }
+    .team-record-list{
+      .team-record-item{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #efefef;
+        padding: .3rem .05rem;
+        box-sizing: border-box;
+        strong{
+          font-size: .24rem;
+        }
+        span{
+          font-size: .2rem;
+          color: #999;
+        }
+      }
+      .team-record-item:last-child{
+        border-bottom: none;
+      }
+    }
   }
 }
 </style>
@@ -195,7 +227,7 @@
 <script>
 import { Toast } from "vux";
 export default {
-  data() {
+  data () {
     return {
       lock: true,
       show: true,
@@ -206,7 +238,7 @@ export default {
     Toast
   },
   methods: {
-    showTap() {
+    showTap () {
       this.show = true;
     }
   }

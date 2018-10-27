@@ -10,6 +10,8 @@ import Exchange from '@/views/exchange'
 import Brokerage from '@/views/brokerage'
 import Withdraw from '@/views/withdraw'
 import Team from '@/views/team'
+import Share from '@/views/share'
+import Poster from '@/views/poster'
 
 Vue.use(Router)
 
@@ -65,6 +67,16 @@ export default new Router({
       path: '/team',
       name: 'Team',
       component: Team
+    },
+    {
+      path: '/share',
+      name: 'Share',
+      component: Share
+    },
+    {
+      path: '/poster',
+      name: 'Poster',
+      component: Poster
     }
   ]
 })

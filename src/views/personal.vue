@@ -8,13 +8,13 @@
           <span>积分100</span>
         </div>
       </div>
-      <div class="personal-panel-right">
+      <div class="personal-panel-right" @click="goWhere('Bill')">
         <strong>200.00</strong>
         <span>余额</span>
       </div>
     </div>
     <div class="personal-share">
-      <div class="personal-share-item">
+      <div class="personal-share-item" @click="goWhere('Share')">
         <div class="personal-share-left">
           <div>
             <strong>分享好友</strong>
@@ -41,27 +41,27 @@
           <strong>我的钱包</strong>
           <span>MY WALLET</span>
         </div>
-        <div class="personal-tab-tit-right">
+        <div class="personal-tab-tit-right" @click="goWhere('Bill')">
           <span>我的账单</span>
           <i class="iconfont icon-email"></i>
         </div>
       </div>
       <div class="personal-tab-wrapper">
-        <div class="personal-tab-wrapper-item">
+        <div class="personal-tab-wrapper-item" @click="goWhere('Recharge')">
           <i class="iconfont icon-email"></i>
           <strong>我的储值</strong>
         </div>
-        <div class="personal-tab-wrapper-item">
+        <div class="personal-tab-wrapper-item" @click="goWhere('Point')">
           <i class="iconfont icon-email"></i>
-          <strong>我的储值</strong>
+          <strong>我的积分</strong>
         </div>
-        <div class="personal-tab-wrapper-item">
+        <div class="personal-tab-wrapper-item" @click="goWhere('Brokerage')">
           <i class="iconfont icon-email"></i>
-          <strong>我的储值</strong>
+          <strong>我的佣金</strong>
         </div>
-        <div class="personal-tab-wrapper-item">
+        <div class="personal-tab-wrapper-item" @click="goWhere('Team')">
           <i class="iconfont icon-email"></i>
-          <strong>我的储值</strong>
+          <strong>我的团队</strong>
         </div>
       </div>
     </div>
@@ -233,6 +233,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      align-items: center;
       strong {
         font-size: 0.24rem;
         color: #474747;
@@ -330,7 +331,7 @@
     }
   }
 }
-.personal-ad{
+.personal-ad {
   background-color: #fff;
   font-size: 0.18rem;
   padding: 0.5rem;
@@ -357,6 +358,11 @@ export default {
   data () {
     return {
       show: true
+    }
+  },
+  methods: {
+    goWhere (name) {
+      this.$router.push({ name: name })
     }
   }
 }
