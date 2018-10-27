@@ -12,12 +12,12 @@
         <span>我的佣金</span>
       </div>
     </div>
-    <div class="team-list">
+    <div class="team-list" @click="showTap">
       <div class="team-list-tit">
         <strong>我的团队</strong>
         <span> MY FORT</span>
       </div>
-      <Scroller scrollbar-x :lock-y="lock">
+      <!-- <Scroller scrollbar-x :lock-y="lock">
         <div class="team-list-item">
           <img src="@/assets/logo.png" alt="">
           <img src="@/assets/logo.png" alt="">
@@ -36,12 +36,72 @@
           <img src="@/assets/logo.png" alt="">
           <img src="@/assets/logo.png" alt="">
         </div>
-      </Scroller>
+      </Scroller> -->
+      <div class="team-list-item-container">
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+      </div>
+      <div class="team-list-item-container">
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+        <div class="team-list-item">
+          <img src="@/assets/logo.png" alt="">
+          <span>拉拉那</span>
+        </div>
+      </div>
     </div>
+
+    <div class="jj">
+      <toast v-model="show" :time="time" type="cancel" width="4em" height="4em" text="去你的小杰瑞"></toast>
+    </div>
+    
   </div>
 </template>
 
 <style lang="less" scoped>
+.weui-toast{
+  height: 4em!important;
+}
 .team {
   .personal-panel {
     background-color: @main-color;
@@ -90,6 +150,7 @@
   .team-list {
     background-color: #fff;
     margin-top: 0.2rem;
+    padding-bottom: 20px;
     .team-list-tit {
       display: flex;
       align-items: center;
@@ -103,33 +164,53 @@
         margin-left: 0.2rem;
       }
     }
-    .team-list-item {
-      // display: flex;
-      // align-items: center;
-      width: auto;
-      white-space: nowrap;
-      img {
-        width: 1rem;
-        height: 1rem;
-        border-radius: 50%;
+    .team-list-item-container {
+      display: flex;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      margin: 20px 0;
+      .team-list-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 20px;
+        img {
+          width: 1rem;
+          height: 1rem;
+          border-radius: 50%;
+        }
+        span {
+          font-size: 0.3rem;
+        }
       }
     }
+  }
+  .jj{
+    width: 12px;
   }
 }
 </style>
 
 <script>
-import { Scroller } from 'vux'
+import { Toast } from "vux";
 export default {
-  data () {
+  data() {
     return {
-      lock: true
-    }
+      lock: true,
+      show: true,
+      time: 5000
+    };
   },
   components: {
-    Scroller
+    Toast
+  },
+  methods: {
+    showTap() {
+      this.show = true;
+    }
   }
-}
+};
 </script>
 
 
