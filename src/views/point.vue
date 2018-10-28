@@ -38,7 +38,7 @@
         </div>
         <div class="point-item-right">09-12 12：09</div>
       </div>
-      <button class="more-btn"><i class="iconfont icon-email"></i></button>
+      <button class="more-btn"><i class="iconfont icon-unfold"></i></button>
     </div>
     <div class="recharge-tips">
       <p>温馨提示：</p>

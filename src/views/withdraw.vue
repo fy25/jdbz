@@ -2,7 +2,7 @@
   <div class="red-container withdraw">
     <div class="withdraw-panel">
       <div class="withdraw-panel-tit">
-        <i class="iconfont icon-email"></i>
+        <i class="iconfont icon-saomiao"></i>
         <span>到账金额</span>
       </div>
       <div class="withdraw-panel-content">

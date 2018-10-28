@@ -12,6 +12,7 @@ import Withdraw from '@/views/withdraw'
 import Team from '@/views/team'
 import Share from '@/views/share'
 import Poster from '@/views/poster'
+import Payment from '@/views/payment'
 
 Vue.use(Router)
 
@@ -77,6 +78,11 @@ export default new Router({
       path: '/poster',
       name: 'Poster',
       component: Poster
+    },
+    {
+      path: '/payment',
+      name: 'Payment',
+      component: Payment
     }
   ]
 })

@@ -6,9 +6,9 @@
       </div>
       <div class="panel-right" :hidden="!panelRight">
         <div class="panel-right-radius" @click="goWhere(path)">
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-qianbao"></i>
           <span>{{rightTit}}</span>
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-enter"></i>
         </div>
       </div>
     </div>

@@ -10,7 +10,7 @@
           <i class="iconfont icon-email"></i>
         </div>
         <div class="sign-input-item">
-          <input type="tel" placeholder="登陆密码" name="" id="">
+          <input type="password" placeholder="登陆密码" name="" id="">
           <i class="iconfont icon-lock"></i>
         </div>
       </div>

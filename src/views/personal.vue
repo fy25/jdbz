@@ -22,17 +22,17 @@
           </div>
           <span>分享好友得佣金</span>
         </div>
-        <i class="iconfont icon-email"></i>
+        <i class="iconfont icon-enter"></i>
       </div>
       <div class="personal-share-line"></div>
-      <div class="personal-share-item">
+      <div class="personal-share-item" @click="goWhere('Payment')">
         <div class="personal-share-left">
           <div>
-            <strong>付款吗</strong>
+            <strong>付款码</strong>
           </div>
           <span>充值更优惠</span>
         </div>
-        <i class="iconfont icon-email"></i>
+        <i class="iconfont icon-enter"></i>
       </div>
     </div>
     <div class="personal-tab">
@@ -43,24 +43,24 @@
         </div>
         <div class="personal-tab-tit-right" @click="goWhere('Bill')">
           <span>我的账单</span>
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-youjiantou"></i>
         </div>
       </div>
       <div class="personal-tab-wrapper">
         <div class="personal-tab-wrapper-item" @click="goWhere('Recharge')">
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-recharge"></i>
           <strong>我的储值</strong>
         </div>
         <div class="personal-tab-wrapper-item" @click="goWhere('Point')">
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-gift"></i>
           <strong>我的积分</strong>
         </div>
         <div class="personal-tab-wrapper-item" @click="goWhere('Brokerage')">
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-money"></i>
           <strong>我的佣金</strong>
         </div>
         <div class="personal-tab-wrapper-item" @click="goWhere('Team')">
-          <i class="iconfont icon-email"></i>
+          <i class="iconfont icon-team"></i>
           <strong>我的团队</strong>
         </div>
       </div>
@@ -75,7 +75,7 @@
           <img src="@/assets/images/favourable.png" alt="">
           <span>玖鼎坝子注册会员首单全场菜品五折吃</span>
         </div>
-        <i class="iconfont icon-email"></i>
+        <i class="iconfont icon-unfold"></i>
       </div>
       <transition name="slide-fade">
         <div v-if="show" class="personal-activity-content">
@@ -84,20 +84,22 @@
       </transition>
     </div>
     <div class="personal-contact">
-      <div class="personal-contact-tit">
+      <div class="personal-contact-tit" @click="show2 = !show2">
         <span>门店及电话</span>
-        <i class="iconfont icon-email"></i>
+        <i class="iconfont icon-unfold"></i>
       </div>
-      <div class="personal-contact-content">
-        <div class="personal-contact-content-left">
-          <strong>玖鼎坝子火锅店（徐州店）</strong>
-          <span>泉山区矿山路枫林绿洲6-1-107</span>
-          <strong>18288288282</strong>
+      <transition name="slide-fade">
+        <div v-if="show2" class="personal-contact-content">
+          <div class="personal-contact-content-left">
+            <strong>玖鼎坝子火锅店（徐州店）</strong>
+            <span>泉山区矿山路枫林绿洲6-1-107</span>
+            <strong>18288288282</strong>
+          </div>
+          <div class="personal-contact-content-right">
+            <img src="../assets/images/tel.png" alt="">
+          </div>
         </div>
-        <div class="personal-contact-content-right">
-          <img src="../assets/images/tel.png" alt="">
-        </div>
-      </div>
+      </transition>
     </div>
     <div class="personal-ad">
       <p>禾界网络提供技术支持</p>
@@ -107,6 +109,7 @@
 </template>
 
 <style lang="less" scoped>
+@import "../assets/css/common.less";
 .personal-panel {
   background-color: @main-color;
   height: 3.25rem;
@@ -197,7 +200,7 @@
   margin-top: 0.2rem;
   width: 100%;
   background-color: #fff;
-  padding: 0.36rem 0.6rem;
+  padding: 0.36rem 0.3rem;
   box-sizing: border-box;
   .personal-tab-tit {
     display: flex;
@@ -351,13 +354,19 @@
   transform: translateX(10px);
   opacity: 0;
 }
+
+.jb {
+  color: #c13339;
+  background-color: #c13339;
+}
 </style>
 
 <script>
 export default {
   data () {
     return {
-      show: true
+      show: true,
+      show2: false
     }
   },
   methods: {

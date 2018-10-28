@@ -31,7 +31,7 @@
         <div class="bill-item-right">178元</div>
       </div>
     </div>
-    <button class="more-btn" @click="goWhere('Login')"><i class="iconfont icon-email"></i></button>
+    <button class="more-btn"><i class="iconfont icon-unfold"></i></button>
   </div>
 </template>
 
