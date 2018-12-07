@@ -17,7 +17,7 @@ import Payment from '@/views/payment'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
