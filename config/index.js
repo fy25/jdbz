@@ -10,11 +10,23 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {
+        target: 'http://www.guanchencanyin.com',//后端接口地址
+        changeOrigin: true,//是否允许跨越
+        pathRewrite: {
+          '^/api': '/api',//重写,
+        }
+      }
+    },
 
     // Various Dev Server settings
+<<<<<<< HEAD
     // host: '192.168.2.100',
     host: '192.168.3.15',
+=======
+    host: '192.168.2.106',
+>>>>>>> e6d8f8bdd18f841e95ccc15dfe4d52c87fec5e0e
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
@@ -44,7 +56,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

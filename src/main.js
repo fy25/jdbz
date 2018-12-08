@@ -3,12 +3,15 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { Base } from "@/utils/base";
 
 import './assets/js/rem.js'
 import './assets/css/normalize.css'
 import './assets/css/fonts/iconfont.css'
 
 Vue.config.productionTip = false
+
+Vue.prototype.$base = Base;
 
 /* eslint-disable no-new */
 new Vue({
