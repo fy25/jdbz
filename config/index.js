@@ -21,12 +21,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-<<<<<<< HEAD
-    // host: '192.168.2.100',
-    host: '192.168.3.15',
-=======
     host: '192.168.2.106',
->>>>>>> e6d8f8bdd18f841e95ccc15dfe4d52c87fec5e0e
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
