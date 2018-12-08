@@ -68,24 +68,24 @@ export default {
     },
     path: {
       type: String,
-      default: ''
+      default: ""
     },
     tit: {
       type: String,
-      default: ''
+      default: ""
     },
     rightTit: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   methods: {
-    goWhere (path) {
-      console.log(path)
-      this.$router.push({ name: path })
+    goWhere(path) {
+      console.log(path);
+      this.$router.push({ name: path });
     }
   }
-}
+};
 </script>
 
 
