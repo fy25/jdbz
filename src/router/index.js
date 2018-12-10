@@ -13,6 +13,7 @@ import Team from '@/views/team'
 import Share from '@/views/share'
 import Poster from '@/views/poster'
 import Payment from '@/views/payment'
+import Test from '@/views/test'
 
 Vue.use(Router)
 
@@ -83,6 +84,11 @@ export default new Router({
       path: '/payment',
       name: 'Payment',
       component: Payment
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     }
   ]
 })
