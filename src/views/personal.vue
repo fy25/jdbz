@@ -2,14 +2,14 @@
   <div class="personal">
     <div class="personal-panel">
       <div class="personal-panel-left">
-        <img src="@/assets/logo.png" alt="">
+        <img src="@/assets/logo.png" alt>
         <div>
-          <strong>我不是德布劳内</strong>
-          <span>积分100</span>
+          <strong>{{u_name}}</strong>
+          <span>积分{{u_integral}}</span>
         </div>
       </div>
       <div class="personal-panel-right" @click="goWhere('Bill')">
-        <strong>200.00</strong>
+        <strong>{{u_balance}}</strong>
         <span>余额</span>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <div class="personal-share-left">
           <div>
             <strong>分享好友</strong>
-            <img src="@/assets/images/hot.png" alt="">
+            <img src="@/assets/images/hot.png" alt>
           </div>
           <span>分享好友得佣金</span>
         </div>
@@ -67,20 +67,18 @@
     </div>
     <div class="personal-activity">
       <div class="personal-activity-top">
-          <strong>商家优惠活动</strong>
-          <span class="uppercase">Merciless activity</span>
+        <strong>商家优惠活动</strong>
+        <span class="uppercase">Merciless activity</span>
       </div>
       <div class="personal-activity-tit" @click="show = !show">
         <div class="personal-activity-tit-left">
-          <img src="@/assets/images/favourable.png" alt="">
+          <img src="@/assets/images/favourable.png" alt>
           <span>玖鼎坝子注册会员首单全场菜品五折吃</span>
         </div>
         <i class="iconfont icon-unfold"></i>
       </div>
       <transition name="slide-fade">
-        <div v-if="show" class="personal-activity-content">
-        dadadadasd
-      </div>
+        <div v-if="show" class="personal-activity-content">dadadadasd</div>
       </transition>
     </div>
     <div class="personal-contact">
@@ -96,7 +94,7 @@
             <strong>18288288282</strong>
           </div>
           <div class="personal-contact-content-right">
-            <img src="../assets/images/tel.png" alt="">
+            <img src="../assets/images/tel.png" alt>
           </div>
         </div>
       </transition>
@@ -366,14 +364,26 @@ export default {
   data () {
     return {
       show: true,
-      show2: false
+      show2: false,
+      u_name: "",
+      u_balance: "",
+      u_integral: "",
     }
+  },
+  mounted () {
+    this.setInfo()
   },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
+    },
+    setInfo () {
+      this.u_name = localStorage.u_name
+      this.u_balance = localStorage.u_balance
+      this.u_integral = localStorage.u_integral
+      this.id = localStorage.id
     }
-  }
+  },
 }
 </script>
 

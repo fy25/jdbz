@@ -2,7 +2,7 @@
   <div class="team">
     <div class="personal-panel">
       <div class="personal-panel-left">
-        <img src="@/assets/logo.png" alt="">
+        <img src="@/assets/logo.png" alt>
         <div>
           <strong>我不是德布劳内</strong>
         </div>
@@ -15,57 +15,57 @@
     <div class="team-list" @click="showTap">
       <div class="team-list-tit">
         <strong>我的团队</strong>
-        <span> MY FORT</span>
+        <span>MY FORT</span>
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
         <div class="team-list-item">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <span>拉拉那</span>
         </div>
       </div>
@@ -95,8 +95,6 @@
         </div>
       </div>
     </div>
-
-    
   </div>
 </template>
 
@@ -189,34 +187,34 @@
       }
     }
   }
-  .team-record{
-    padding: .5rem;
+  .team-record {
+    padding: 0.5rem;
     box-sizing: border-box;
     background-color: #fff;
-    margin-top: .2rem;
-    .team-record-tit{
-      font-size: .32rem;
+    margin-top: 0.2rem;
+    .team-record-tit {
+      font-size: 0.32rem;
       border-bottom: 1px solid #efefef;
-      padding: .3rem 0;
+      padding: 0.3rem 0;
       font-weight: 700;
     }
-    .team-record-list{
-      .team-record-item{
+    .team-record-list {
+      .team-record-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
         border-bottom: 1px solid #efefef;
-        padding: .3rem .05rem;
+        padding: 0.3rem 0.05rem;
         box-sizing: border-box;
-        strong{
-          font-size: .24rem;
+        strong {
+          font-size: 0.24rem;
         }
-        span{
-          font-size: .2rem;
+        span {
+          font-size: 0.2rem;
           color: #999;
         }
       }
-      .team-record-item:last-child{
+      .team-record-item:last-child {
         border-bottom: none;
       }
     }
@@ -226,6 +224,7 @@
 
 <script>
 import { Toast } from "vux";
+import * as my from '@/services/my'
 export default {
   data () {
     return {
@@ -237,9 +236,21 @@ export default {
   components: {
     Toast
   },
+  mounted () {
+    this.getFirstTeam()
+  },
   methods: {
     showTap () {
       this.show = true;
+    },
+    getFirstTeam () {
+      let data = {
+        userId: localStorage.id,
+        jdbz: 'get_sales_noe'
+      }
+      my.firstDistribution(data).then(res => {
+        console.log(res)
+      })
     }
   }
 };

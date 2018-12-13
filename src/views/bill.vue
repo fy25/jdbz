@@ -4,34 +4,36 @@
     <div class="bill-list">
       <div class="bill-item">
         <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <strong>10-24 09:19</strong>
         </div>
         <div class="bill-item-right">178元</div>
       </div>
       <div class="bill-item">
         <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <strong>10-24 09:19</strong>
         </div>
         <div class="bill-item-right">178元</div>
       </div>
       <div class="bill-item">
         <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <strong>10-24 09:19</strong>
         </div>
         <div class="bill-item-right">178元</div>
       </div>
       <div class="bill-item">
         <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt="">
+          <img src="@/assets/logo.png" alt>
           <strong>10-24 09:19</strong>
         </div>
         <div class="bill-item-right">178元</div>
       </div>
     </div>
-    <button class="more-btn"><i class="iconfont icon-unfold"></i></button>
+    <button class="more-btn">
+      <i class="iconfont icon-unfold"></i>
+    </button>
   </div>
 </template>
 
@@ -74,6 +76,7 @@
 
 <script>
 import Panel from '@/components/panel'
+import * as my from '@/services/my'
 export default {
   data () {
     return {
@@ -83,9 +86,22 @@ export default {
   components: {
     Panel
   },
+  mounted () {
+    this.getBillList()
+  },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
+    },
+    getBillList () {
+      let data = {
+        userId: localStorage.id,
+        page: '1',
+        jdbz: 'get_order'
+      }
+      my.orderList(data).then(res => {
+        console.log(res)
+      })
     }
   }
 }

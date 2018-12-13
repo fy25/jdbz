@@ -5,7 +5,7 @@
       <div class="point-list-tit">佣金记录</div>
       <div class="brokerage-item">
         <div class="brokerage-item-left">
-          <img src="@/assets/logo.png" >
+          <img src="@/assets/logo.png">
           <div class="brokerage-item-left-text">
             <strong>用户昵称</strong>
             <span>消费1000元</span>
@@ -18,7 +18,7 @@
       </div>
       <div class="brokerage-item">
         <div class="brokerage-item-left">
-          <img src="@/assets/logo.png" >
+          <img src="@/assets/logo.png">
           <div class="brokerage-item-left-text">
             <strong>用户昵称</strong>
             <span>消费1000元</span>
@@ -31,7 +31,7 @@
       </div>
       <div class="brokerage-item">
         <div class="brokerage-item-left">
-          <img src="@/assets/logo.png" >
+          <img src="@/assets/logo.png">
           <div class="brokerage-item-left-text">
             <strong>用户昵称</strong>
             <span>消费1000元</span>
@@ -44,7 +44,7 @@
       </div>
       <div class="brokerage-item">
         <div class="brokerage-item-left">
-          <img src="@/assets/logo.png" >
+          <img src="@/assets/logo.png">
           <div class="brokerage-item-left-text">
             <strong>用户昵称</strong>
             <span>消费1000元</span>
@@ -55,7 +55,9 @@
           <span>09-25 12:22</span>
         </div>
       </div>
-      <button class="more-btn"><i class="iconfont icon-unfold"></i></button>
+      <button class="more-btn">
+        <i class="iconfont icon-unfold"></i>
+      </button>
     </div>
     <div class="recharge-tips">
       <p>温馨提示：</p>
@@ -139,6 +141,7 @@
 
 <script>
 import Panel from '@/components/panel'
+import * as my from '@/services/my'
 export default {
   data () {
     return {
@@ -148,10 +151,23 @@ export default {
   components: {
     Panel
   },
+  mounted () {
+    this.getBrokerageList()
+  },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
     },
+    getBrokerageList () {
+      let data = {
+        userId: localStorage.id,
+        page: '1',
+        jdbz: 'get_order'
+      }
+      my.brokerageList(data).then(res => {
+        console.log(res)
+      })
+    }
   }
 }
 </script>

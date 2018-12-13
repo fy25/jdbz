@@ -21,6 +21,7 @@
       <span @click="goWhere('Sign')">快速注册</span>
     </div>
     <Actionsheet v-model="actionShow" :menus="menus" show-cancel></Actionsheet>
+    <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
   </div>
 </template>
 
@@ -44,54 +45,68 @@
 import { Config } from "@/config/config.js";
 import { Actionsheet } from "vux";
 import { AlertModule } from "vux";
+import Toast from '@/components/toast'
 import * as sign from "@/services/sign";
 export default {
-  data() {
+  data () {
     return {
       logo: "",
       actionShow: false,
       menus: ["短信验证登录"],
       u_mobile: null,
-      u_pas: null
+      u_pas: null,
+      showToast: false
     };
   },
   components: {
-    Actionsheet
+    Actionsheet,
+    Toast
   },
-  mounted() {
+  mounted () {
     this.logo = Config.logo;
   },
   methods: {
-    goWhere(name) {
+    navigateTo (name) {
       this.$router.push({ name: name });
     },
-    forgetTap() {
+    redirectTo (name) {
+      this.$router.replace({ name: name });
+    },
+
+    forgetTap () {
       this.actionShow = true;
     },
 
     // 登录
-    signIn() {
+    signIn () {
       let data = {
         u_mobile: this.u_mobile,
         u_pas: this.u_pas,
         jdbz: "get_register"
       };
-      console.log(data);
       if (data.u_mobile == null || data.u_pas == null) {
         this.$vux.alert.show({
           title: "请填写登录信息",
-          content: "",
-          onShow() {
-            console.log("Plugin: I'm showing");
-          },
-          onHide() {
-            console.log("Plugin: I'm hiding");
+          content: ""
+        });
+      } else {
+        sign.signIn(data).then(res => {
+          console.log(res);
+          if (res.code == "200") {
+            this.showToast = true;
+            this.toastText = "登录成功"
+            this.toastIcon = "success"
+            setTimeout(() => {
+              this.showToast = false;
+              localStorage.setItem('id', res.data.data[0].id)
+              localStorage.setItem('u_balance', res.data.data[0].u_balance)
+              localStorage.setItem('u_integral', res.data.data[0].u_integral)
+              localStorage.setItem('u_name', res.data.data[0].u_name)
+              this.redirectTo('Personal')
+            }, 1500)
           }
         });
       }
-      // sign.signIn(data).then(res => {
-      //   console.log(res);
-      // });
     }
   }
 };
