@@ -1,5 +1,5 @@
 <template>
-  <div class="small"></div>
+  <div class="small">{{getCity}}</div>
 </template>
 
 
@@ -21,12 +21,22 @@ export default {
       console.log(res);
     });
     // console.log("1321231231321")
-    // my.brokerageList().then(res => {
-    //   console.log("13212313213");
-    // });
-    // console.log(this);
+    sign
+      .signIn({
+        u_mobile: "15852312811",
+        u_pas: "123456",
+        jdbz: "get_register"
+      })
+      .then(res => {
+        console.log(res);
+      });
   },
-  methods: {}
+  methods: {},
+  computed: {
+    getCity() {
+      // return this.$store.getters.getCityFn;
+    }
+  }
 };
 </script>
 

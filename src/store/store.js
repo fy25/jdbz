@@ -13,7 +13,8 @@ let store = new Vuex.Store({
         // 参数列表state指的是state数据
         getCityFn(state) {
             return state.city;
-        }
+        },
+        
     },
     // 3. actions
     // 通常跟api接口打交道
