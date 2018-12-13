@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import { Base } from "@/utils/base";
 import Vuex from "vuex"
+import store from "./store/store"
+import { AlertPlugin } from 'vux'
+Vue.use(AlertPlugin)
 
 import './assets/js/rem.js'
 import './assets/css/normalize.css'
@@ -19,6 +22,7 @@ Vue.use(Vuex)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

@@ -1,9 +1,13 @@
 import { Base } from "../utils/base"
 
-function signUp (data) {
+function getPic(data) {
+  return Base.post('/Api/activity.ashx', data)
+}
+
+function signIn(data) {
   return new Promise((resole, reject) => {
-    Base.post('/App/Customer/Register.aspx', data)
+    Base.post('/Api/activity.ashx', data)
   })
 }
 
-export { signUp }
+export { signUp, getPic, signIn }

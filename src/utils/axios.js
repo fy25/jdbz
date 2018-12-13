@@ -4,9 +4,9 @@ import { Config } from "../config/config"
 
 
 // 配置项
-// axios.defaults.baseURL = Config.server;
+axios.defaults.baseURL = Config.server;
 // axios.defaults.baseURL = '/api';
-axios.defaults.baseURL = process.env.BASE_API;
+// axios.defaults.baseURL = process.env.BASE_API;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 axios.defaults.transformRequest = data => {
   return Qs.stringify(data);
