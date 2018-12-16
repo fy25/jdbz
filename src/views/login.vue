@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <img :src="logo" alt>
+      <img src="@/assets/images/logo.png" alt>
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
         <div class="sign-input-item">
-          <input type="tel" placeholder="用户名称" v-model="u_mobile">
+          <input type="tel" placeholder="手机号" v-model="u_mobile" maxlength="11">
           <i class="iconfont icon-email"></i>
         </div>
         <div class="sign-input-item">
@@ -17,8 +17,8 @@
       <button @click="signIn">登录</button>
     </div>
     <div class="logo-forget">
-      <span @click="forgetTap">忘记密码</span>
-      <span @click="goWhere('Sign')">快速注册</span>
+      <span @click="forgetTap"> </span>
+      <span @click="redirectTo('Sign')">快速注册</span>
     </div>
     <Actionsheet v-model="actionShow" :menus="menus" show-cancel></Actionsheet>
     <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
@@ -91,7 +91,6 @@ export default {
         });
       } else {
         sign.signIn(data).then(res => {
-          console.log(res);
           if (res.code == "200") {
             this.showToast = true;
             this.toastText = "登录成功"
@@ -102,8 +101,14 @@ export default {
               localStorage.setItem('u_balance', res.data.data[0].u_balance)
               localStorage.setItem('u_integral', res.data.data[0].u_integral)
               localStorage.setItem('u_name', res.data.data[0].u_name)
+              localStorage.setItem('u_img', res.data.data[0].u_img)
               this.redirectTo('Personal')
             }, 1500)
+          } else {
+            this.$vux.alert.show({
+              title: res.message,
+              content: ""
+            });
           }
         });
       }

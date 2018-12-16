@@ -4,9 +4,12 @@
     <p class="recharge-tit">请选择充值金额</p>
     <div class="recharge-list">
       <div class="recharge-item" v-for="(item,index) in rechargeList" :key="index">
-        <div :class="[sumNum==index?'recharge-item-wrapper-cur':'recharge-item-wrapper']" @click="sumTap(index)">
-          <strong>{{item.sum}}元</strong>
-          <span>(赠送{{item.present}}元)</span>
+        <div
+          :class="[sumNum==index?'recharge-item-wrapper-cur':'recharge-item-wrapper']"
+          @click="sumTap(index)"
+        >
+          <strong>{{item.t_money}}元</strong>
+          <span>(赠送{{item.t_sendMoney}}元)</span>
         </div>
       </div>
     </div>
@@ -106,37 +109,32 @@
 
 <script>
 import Panel from '@/components/panel'
+import * as recharge from "@/services/recharge"
 export default {
   data () {
     return {
       panelRight: false,
       sumNum: 0,
       rechargeList: [
-        {
-          sum: 300,
-          present: 50
-        },
-        {
-          sum: 500,
-          present: 100
-        },
-        {
-          sum: 1000,
-          present: 300
-        },
-        {
-          sum: 2000,
-          present: 700
-        }
       ]
     }
   },
   components: {
     Panel
   },
+  mounted () {
+    this.getRechargeMeal()
+  },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
+    },
+    getRechargeMeal () {
+      console.log(12321312)
+      recharge.rechargeMeal({ jdbz: 'get_top_up' }).then(res => {
+        console.log(res)
+        this.rechargeList = res.data.data
+      })
     },
 
     // 选择充值金额

@@ -3,18 +3,21 @@
     <Panel :panel-right="panelRight" tit="当前积分"></Panel>
     <p class="recharge-tit">请选择兑换商品</p>
     <div class="recharge-list">
-      <div class="recharge-item" v-for="(item,index) in rechargeList" :key="index">
-        <div :class="[sumNum==index?'recharge-item-wrapper-cur':'recharge-item-wrapper']" @click="sumTap(index)">
-          <strong>{{item.sum}}元</strong>
-          <span>(赠送{{item.present}}元)</span>
+      <div class="recharge-item" v-for="(item,index) in goodsList" :key="index">
+        <div
+          :class="[sumNum==index?'recharge-item-wrapper-cur':'recharge-item-wrapper']"
+          @click="sumTap(index,item.id)"
+        >
+          <strong>{{item.g_name}}</strong>
+          <span>({{item.g_integral}}积分)</span>
         </div>
       </div>
     </div>
     <div class="recharge-pay">
       <span>消费积分：</span>
-      <strong>300元</strong>
+      <strong>{{g_integral}}</strong>
     </div>
-    <button class="recharge-btn" @click="showTap">立即兑换</button>
+    <button class="recharge-btn" @click="exchangeTap">立即兑换</button>
     <div class="recharge-tips">
       <p>温馨提示：</p>
       <span>1、仅限堂食</span>
@@ -24,11 +27,12 @@
     <x-dialog v-model="showDialog" hide-on-blur @on-show="jj" @on-hide="bb">
       <div class="exchange-pop">
         <div class="exchange-pop-top">
-          <img :src="logo" alt="">
+          <img :src="logo" alt>
         </div>
         <div class="exchange-pop-bottom">恭喜您，兑换成功！</div>
       </div>
     </x-dialog>
+    <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
   </div>
 </template>
 
@@ -134,36 +138,27 @@
 import Panel from '@/components/panel'
 import { XDialog } from 'vux'
 import { Config } from '@/config/config'
+import Toast from '@/components/toast'
+import * as goods from '@/services/goods'
 export default {
   data () {
     return {
       panelRight: false,
       sumNum: 0,
-      rechargeList: [
-        {
-          sum: 300,
-          present: 50
-        },
-        {
-          sum: 500,
-          present: 100
-        },
-        {
-          sum: 1000,
-          present: 300
-        },
-        {
-          sum: 2000,
-          present: 700
-        }
-      ],
+      goodsList: [],
       showDialog: false,
-      logo: Config.logo
+      logo: Config.logo,
+      g_integral: '',
+      showToast: false
     }
   },
   components: {
     Panel,
-    XDialog
+    XDialog,
+    Toast
+  },
+  mounted () {
+    this.getGoods()
   },
   methods: {
     jj () {
@@ -175,10 +170,55 @@ export default {
     goWhere (name) {
       this.$router.push({ name: name })
     },
+    getGoods () {
+      let data = {
+        page: 1,
+        jdbz: 'get_goods'
+      }
+      goods.goodList(data).then(res => {
+        console.log(res)
+        if (res.code = "200") {
+          this.goodsList = res.data.data
+          this.g_integral = this.goodsList[0].g_integral
+          this.id = this.goodsList[0].id
+        }
+      })
+    },
 
     // 选择充值金额
-    sumTap (index) {
+    sumTap (index, id) {
       this.sumNum = index
+      this.id = id
+      this.g_integral = this.goodsList[index].g_integral
+    },
+
+    // 兑换
+    exchangeTap () {
+      let data = {
+        goodsid: this.id,
+        type: 1,
+        userid: localStorage.id,
+        jdbz: 'get_exchange_goods'
+      }
+      goods.exchangeGoods(data).then(res => {
+        console.log(res)
+        if (res.code == "200") {
+          this.showToast = true
+          this.toastText = res.message;
+          this.toastIcon = "success";
+          setTimeout(() => {
+            this.showToast = false
+          }, 1500)
+
+        } else {
+          this.showToast = true
+          this.toastText = res.message;
+          this.toastIcon = "error";
+          setTimeout(() => {
+            this.showToast = false
+          }, 1500)
+        }
+      })
     },
 
     // 打开弹窗

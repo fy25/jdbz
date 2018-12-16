@@ -1,17 +1,17 @@
 <template>
-    <div class="panel">
-      <div class="panel-left">
-        <span>{{tit}}</span>
-        <strong>19，254.20</strong>
-      </div>
-      <div class="panel-right" :hidden="!panelRight">
-        <div class="panel-right-radius" @click="goWhere(path)">
-          <i class="iconfont icon-qianbao"></i>
-          <span>{{rightTit}}</span>
-          <i class="iconfont icon-enter"></i>
-        </div>
+  <div class="panel">
+    <div class="panel-left">
+      <span>{{tit}}</span>
+      <strong>{{money}}</strong>
+    </div>
+    <div class="panel-right" :hidden="!panelRight">
+      <div class="panel-right-radius" @click="goWhere(path)">
+        <i class="iconfont icon-qianbao"></i>
+        <span>{{rightTit}}</span>
+        <i class="iconfont icon-enter"></i>
       </div>
     </div>
+  </div>
 </template>
 
 <style lang="less" scoped>
@@ -77,10 +77,14 @@ export default {
     rightTit: {
       type: String,
       default: ""
+    },
+    money: {
+      type: Number,
+      default: 0.00
     }
   },
   methods: {
-    goWhere(path) {
+    goWhere (path) {
       console.log(path);
       this.$router.push({ name: path });
     }

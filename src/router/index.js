@@ -14,6 +14,7 @@ import Share from '@/views/share'
 import Poster from '@/views/poster'
 import Payment from '@/views/payment'
 import Test from '@/views/test'
+import Setting from '@/views/setting'
 
 Vue.use(Router)
 
@@ -89,6 +90,11 @@ export default new Router({
       path: '/test',
       name: 'Test',
       component: Test
+    },
+    {
+      path: '/setting',
+      name: 'Setting',
+      component: Setting
     }
   ]
 })

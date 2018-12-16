@@ -1,37 +1,20 @@
 <template>
   <div class="bill common-container">
-    <Panel :panel-right="panelRight" path="Recharge" tit="我的余额（元）" rightTit="充值"></Panel>
+    <Panel :panel-right="panelRight" path="Recharge" tit="我的余额（元）" rightTit="充值" :money="money"></Panel>
     <div class="bill-list">
-      <div class="bill-item">
+      <div class="bill-item" v-for="(item,index) in list" :key="index">
         <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt>
-          <strong>10-24 09:19</strong>
+          <!-- <img src="@/assets/logo.png" alt> -->
+          <strong>{{item.t_createDate}}</strong>
+          <span v-if="item.t_state=='0'" style="color:#FFBE00">(未支付)</span>
+          <span v-if="item.t_state=='1'" style="color:#09BB07">(支付成功)</span>
+          <span v-if="item.t_state=='2'" style="color:#F76260">(取消支付)</span>
         </div>
-        <div class="bill-item-right">178元</div>
+        <div class="bill-item-right">{{item.t_money}}元</div>
       </div>
-      <div class="bill-item">
-        <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt>
-          <strong>10-24 09:19</strong>
-        </div>
-        <div class="bill-item-right">178元</div>
-      </div>
-      <div class="bill-item">
-        <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt>
-          <strong>10-24 09:19</strong>
-        </div>
-        <div class="bill-item-right">178元</div>
-      </div>
-      <div class="bill-item">
-        <div class="bill-item-left">
-          <img src="@/assets/logo.png" alt>
-          <strong>10-24 09:19</strong>
-        </div>
-        <div class="bill-item-right">178元</div>
-      </div>
+      <load-more v-if="nodata" :show-loading="showLoading" tip="暂无数据"></load-more>
     </div>
-    <button class="more-btn">
+    <button v-if="!nodata" class="more-btn">
       <i class="iconfont icon-unfold"></i>
     </button>
   </div>
@@ -57,10 +40,9 @@
       .bill-item-left {
         display: flex;
         align-items: center;
-        img {
-          width: 0.68rem;
-          height: 0.68rem;
-          border-radius: 50%;
+        span {
+          font-size: 0.26rem;
+          margin-left: 10px;
         }
         strong {
           margin-left: 0.3rem;
@@ -76,11 +58,15 @@
 
 <script>
 import Panel from '@/components/panel'
-import * as my from '@/services/my'
+import * as recharge from '@/services/recharge'
 export default {
   data () {
     return {
-      panelRight: true
+      panelRight: true,
+      list: [],
+      money: 0,
+      showLoading: false,
+      nodata: false
     }
   },
   components: {
@@ -88,19 +74,28 @@ export default {
   },
   mounted () {
     this.getBillList()
+    this.getPanelMoney()
   },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
     },
+    getPanelMoney () {
+      this.money = Number(localStorage.u_balance)
+    },
     getBillList () {
       let data = {
         userId: localStorage.id,
         page: '1',
-        jdbz: 'get_order'
+        jdbz: 'get_top_log'
       }
-      my.orderList(data).then(res => {
+      recharge.integration(data).then(res => {
         console.log(res)
+        if (res.code == "200") {
+          this.list = res.data.data
+        } else {
+          this.nodata = true
+        }
       })
     }
   }

@@ -2,6 +2,7 @@
   <div class="toast">
     <img v-if="icon=='success'" src="@/assets/images/success.png" alt>
     <img v-if="icon=='error'" src="@/assets/images/error.png" alt>
+    <img v-if="icon=='loading'" src="@/assets/images/loading.gif" alt>
     <span>{{text}}</span>
   </div>
 </template>

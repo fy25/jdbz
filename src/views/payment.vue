@@ -6,14 +6,14 @@
         <span>向商家付款</span>
       </div>
       <div class="withdraw-panel-content">
-       <img class="qr" src="@/assets/images/qr.jpg" alt="">
-       <div class="withdraw-panel-content-bottom">
-         <div class="withdraw-panel-content-bottom-top">
-           <i class="iconfont icon-money1f"></i>
-           <strong>余额</strong>
-         </div>
-         <p>优先使用此支付方式</p>
-       </div>
+        <img class="qr" src="@/assets/images/qrcode.png" alt>
+        <div class="withdraw-panel-content-bottom">
+          <div class="withdraw-panel-content-bottom-top">
+            <i class="iconfont icon-money1f"></i>
+            <strong>余额</strong>
+          </div>
+          <p>优先使用此支付方式</p>
+        </div>
       </div>
     </div>
   </div>
@@ -47,33 +47,33 @@
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
-      .qr{
+      .qr {
         width: 3rem;
         height: 3rem;
         margin: 1rem auto;
       }
-      .withdraw-panel-content-bottom{
+      .withdraw-panel-content-bottom {
         display: flex;
         flex-direction: column;
         border-top: 1px solid #eee;
-        padding-top: .2rem;
-        .withdraw-panel-content-bottom-top{
+        padding-top: 0.2rem;
+        .withdraw-panel-content-bottom-top {
           display: flex;
           align-items: center;
-          i{
-            color: #FF9500;
+          i {
+            color: #ff9500;
           }
-          strong{
-            font-size: .3rem;
-            margin-left: .1rem;
+          strong {
+            font-size: 0.3rem;
+            margin-left: 0.1rem;
             font-weight: normal;
           }
         }
-        p{
-          font-size: .2rem;
-          padding-left: .3rem;
+        p {
+          font-size: 0.2rem;
+          padding-left: 0.3rem;
           box-sizing: border-box;
-          margin: .1rem 0 0;
+          margin: 0.1rem 0 0;
         }
       }
     }
@@ -83,7 +83,11 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      imgUrl: ''
+    }
+  }
 }
 </script>
 

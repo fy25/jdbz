@@ -1,44 +1,20 @@
 <template>
   <div class="point common-container">
-    <Panel :panel-right="panelRight" path="Exchange" tit="我的积分" rightTit="兑换"></Panel>
+    <Panel :panel-right="panelRight" path="Exchange" tit="我的积分" rightTit="兑换" :money="money"></Panel>
     <div class="point-list">
       <div class="point-list-tit">积分记录</div>
-      <div class="point-item">
+      <div class="point-item" v-for="(item,index) in pointList" :key="index">
         <div class="point-item-left">
-          <span>用户登录</span>
-          <strong>+10</strong>
+          <span>{{item.i_name}}</span>
+          <strong v-if="item.i_state=='1'">+{{item.i_number}}</strong>
+          <strong v-if="item.i_state=='0'">-{{item.i_number}}</strong>
         </div>
-        <div class="point-item-right">09-12 12：09</div>
+        <div class="point-item-right">{{item.i_createDate}}</div>
       </div>
-      <div class="point-item">
-        <div class="point-item-left">
-          <span>用户登录</span>
-          <strong>+10</strong>
-        </div>
-        <div class="point-item-right">09-12 12：09</div>
-      </div>
-      <div class="point-item">
-        <div class="point-item-left">
-          <span>用户登录</span>
-          <strong>+10</strong>
-        </div>
-        <div class="point-item-right">09-12 12：09</div>
-      </div>
-      <div class="point-item">
-        <div class="point-item-left">
-          <span>用户登录</span>
-          <strong>+10</strong>
-        </div>
-        <div class="point-item-right">09-12 12：09</div>
-      </div>
-      <div class="point-item">
-        <div class="point-item-left">
-          <span>用户登录</span>
-          <strong>+10</strong>
-        </div>
-        <div class="point-item-right">09-12 12：09</div>
-      </div>
-      <button class="more-btn"><i class="iconfont icon-unfold"></i></button>
+      <load-more v-if="nodata" :show-loading="showLoading" tip="暂无数据"></load-more>
+      <button v-if="!nodata" class="more-btn">
+        <i class="iconfont icon-unfold"></i>
+      </button>
     </div>
     <div class="recharge-tips">
       <p>温馨提示：</p>
@@ -98,18 +74,45 @@
 
 <script>
 import Panel from '@/components/panel'
+import * as recharge from "@/services/recharge"
 export default {
   data () {
     return {
-      panelRight: true
+      panelRight: true,
+      pointList: [],
+      money: 0,
+      showLoading: false,
+      nodata: false
     }
   },
   components: {
     Panel
   },
+  mounted () {
+    this.getPointList()
+    this.getPanelMoney()
+  },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
+    },
+    getPointList () {
+      let data = {
+        userId: localStorage.id,
+        page: '1',
+        jdbz: 'get_integral'
+      }
+      recharge.integration(data).then(res => {
+        console.log(res)
+        if (res.code == "200") {
+          this.pointList = res.data.data
+        } else {
+          this.nodata = true
+        }
+      })
+    },
+    getPanelMoney () {
+      this.money = Number(localStorage.u_integral)
     },
   }
 }

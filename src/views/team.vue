@@ -2,13 +2,14 @@
   <div class="team">
     <div class="personal-panel">
       <div class="personal-panel-left">
-        <img src="@/assets/logo.png" alt>
+        <img v-if="u_img==''" src="@/assets/images/avatar.jpg" alt>
+        <img v-else :src="u_img" alt>
         <div>
-          <strong>我不是德布劳内</strong>
+          <strong>{{u_name}}</strong>
         </div>
       </div>
       <div class="personal-panel-right">
-        <strong>200.00</strong>
+        <!-- <strong>200.00</strong> -->
         <span>我的佣金</span>
       </div>
     </div>
@@ -18,82 +19,27 @@
         <span>MY FORT</span>
       </div>
       <div class="team-list-item-container">
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
+        <div class="team-list-item" v-for="(item,index) in firstList" :key="index">
+          <img :src="item.u_img" alt>
+          <span>{{item.u_name}}</span>
         </div>
       </div>
       <div class="team-list-item-container">
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
-        </div>
-        <div class="team-list-item">
-          <img src="@/assets/logo.png" alt>
-          <span>拉拉那</span>
+        <div class="team-list-item" v-for="(item,index) in secondList" :key="index">
+          <img :src="item.u_img" alt>
+          <span>{{item.u_name}}</span>
         </div>
       </div>
     </div>
     <div class="team-record">
       <div class="team-record-tit">消费记录</div>
       <div class="team-record-list">
-        <div class="team-record-item">
-          <strong>川西白字消费100元</strong>
-          <span>09-24 13:33</span>
-        </div>
-        <div class="team-record-item">
-          <strong>川西白字消费100元</strong>
-          <span>09-24 13:33</span>
-        </div>
-        <div class="team-record-item">
-          <strong>川西白字消费100元</strong>
-          <span>09-24 13:33</span>
-        </div>
-        <div class="team-record-item">
-          <strong>川西白字消费100元</strong>
-          <span>09-24 13:33</span>
-        </div>
-        <div class="team-record-item">
-          <strong>川西白字消费100元</strong>
-          <span>09-24 13:33</span>
+        <div class="team-record-item" v-for="(item,index) in list" :key="index">
+          <strong>{{item.g_name}}消费{{item.o_price}}元</strong>
+          <span>{{item.o_createDate}}</span>
         </div>
       </div>
+      <load-more v-if="nodata" :show-loading="showLoading" tip="暂无数据"></load-more>
     </div>
   </div>
 </template>
@@ -230,7 +176,14 @@ export default {
     return {
       lock: true,
       show: true,
-      time: 5000
+      time: 5000,
+      list: [],
+      firstList: [],
+      secondList: [],
+      u_name: "",
+      u_img: "",
+      showLoading: false,
+      nodata: false
     };
   },
   components: {
@@ -238,19 +191,64 @@ export default {
   },
   mounted () {
     this.getFirstTeam()
+    this.getSecondTeam()
+    this.getPayList()
+    this.getInfo()
   },
   methods: {
     showTap () {
       this.show = true;
     },
+    // 一级分销
     getFirstTeam () {
       let data = {
         userId: localStorage.id,
         jdbz: 'get_sales_noe'
       }
       my.firstDistribution(data).then(res => {
-        console.log(res)
+        if (res.code == "200") {
+          this.firstList = res.data.data
+
+        }
       })
+    },
+    // 二级分销
+    getSecondTeam () {
+      let data = {
+        userId: localStorage.id,
+        jdbz: 'get_sales_two'
+      }
+      my.secondDistribution(data).then(res => {
+        console.log(res, '2')
+        if (res.code == "200") {
+          this.secondList = res.data.data
+        }
+      })
+    },
+    // 消费列表
+    getPayList () {
+      let data = {
+        userId: localStorage.id,
+        page: 1,
+        jdbz: 'get_order'
+      }
+      my.orderList(data).then(res => {
+        console.log(res, '3')
+        if (res.code == "200") {
+          if ((res.data.data).length == 0) {
+            this.nodata = true
+          } else {
+            this.list = res.data.data
+          }
+        } else {
+          this.nodata = true
+        }
+      })
+    },
+    // 基本信息返回
+    getInfo () {
+      this.u_name = localStorage.u_name,
+        this.u_img = localStorage.u_img
     }
   }
 };

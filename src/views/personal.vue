@@ -1,8 +1,9 @@
 <template>
   <div class="personal">
     <div class="personal-panel">
-      <div class="personal-panel-left">
-        <img src="@/assets/logo.png" alt>
+      <div class="personal-panel-left" @click="goWhere('Setting')">
+        <img v-if="u_img==''" src="@/assets/images/avatar.jpg" alt>
+        <img v-else :src="u_img" alt>
         <div>
           <strong>{{u_name}}</strong>
           <span>积分{{u_integral}}</span>
@@ -73,12 +74,12 @@
       <div class="personal-activity-tit" @click="show = !show">
         <div class="personal-activity-tit-left">
           <img src="@/assets/images/favourable.png" alt>
-          <span>玖鼎坝子注册会员首单全场菜品五折吃</span>
+          <span>{{title}}</span>
         </div>
         <i class="iconfont icon-unfold"></i>
       </div>
       <transition name="slide-fade">
-        <div v-if="show" class="personal-activity-content">dadadadasd</div>
+        <div v-if="show" class="personal-activity-content">{{cont}}</div>
       </transition>
     </div>
     <div class="personal-contact">
@@ -91,11 +92,11 @@
           <div class="personal-contact-content-left">
             <strong>玖鼎坝子火锅店（徐州店）</strong>
             <span>泉山区矿山路枫林绿洲6-1-107</span>
-            <strong>18288288282</strong>
+            <strong>0516-87771555</strong>
           </div>
-          <div class="personal-contact-content-right">
+          <a href="tel:0516-87771555" class="personal-contact-content-right">
             <img src="../assets/images/tel.png" alt>
-          </div>
+          </a>
         </div>
       </transition>
     </div>
@@ -360,6 +361,7 @@
 </style>
 
 <script>
+import * as my from "@/services/my"
 export default {
   data () {
     return {
@@ -368,20 +370,42 @@ export default {
       u_name: "",
       u_balance: "",
       u_integral: "",
+      u_img: "",
+      title: '',
+      cont: ''
     }
   },
   mounted () {
     this.setInfo()
+    this.getActivity()
+    if (!localStorage.id) {
+      this.redirectTo('Login')
+    }
   },
   methods: {
     goWhere (name) {
       this.$router.push({ name: name })
     },
+    redirectTo (name) {
+      this.$router.replace({ name: name });
+    },
     setInfo () {
       this.u_name = localStorage.u_name
       this.u_balance = localStorage.u_balance
       this.u_integral = localStorage.u_integral
+      this.u_img = localStorage.u_img
       this.id = localStorage.id
+    },
+    // 获取商家活动
+    getActivity () {
+      my.activity({
+        jdbz: 'get_discounts_info'
+      }).then(res => {
+        if (res.code = "200") {
+          this.title = res.data.data[0].title
+          this.cont = decodeURIComponent(res.data.data[0].cont)
+        }
+      })
     }
   },
 }

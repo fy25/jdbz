@@ -9,7 +9,7 @@
         <strong>提现金额</strong>
         <div class="withdraw-panel-content-input">
           <span>￥</span>
-          <input type="number" name="" placeholder="提现金额" id="">
+          <input type="number" name placeholder="提现金额" v-model="money">
         </div>
         <div class="withdraw-panel-content-bottom">
           <span>本次可提现￥1000.00，</span>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <button class="withdraw-btn">提现</button>
+    <button class="withdraw-btn" @click="withdraw">提现</button>
   </div>
 </template>
 
@@ -103,8 +103,26 @@
 </style>
 
 <script>
+import * as my from '@/services/my'
 export default {
-
+  data () {
+    return {
+      money: 0
+    }
+  },
+  mounted () { },
+  methods: {
+    withdraw () {
+      let data = {
+        userId: localStorage.id,
+        money: this.money,
+        jdbz: 'get_brokerage_withdraw'
+      }
+      my.withdraw(data).then(res => {
+        console.log(res)
+      })
+    }
+  }
 }
 </script>
 

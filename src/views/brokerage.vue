@@ -3,59 +3,22 @@
     <Panel :panel-right="panelRight" path="Withdraw" tit="我的佣金（元）" rightTit="提现"></Panel>
     <div class="point-list">
       <div class="point-list-tit">佣金记录</div>
-      <div class="brokerage-item">
+      <div class="brokerage-item" v-for="(item,index) in brokerageList" :key="index">
         <div class="brokerage-item-left">
-          <img src="@/assets/logo.png">
+          <!-- <img src="@/assets/logo.png"> -->
           <div class="brokerage-item-left-text">
-            <strong>用户昵称</strong>
-            <span>消费1000元</span>
+            <strong>{{item.u_name}}</strong>
+            <span>消费{{item.b_Xmoney}}元</span>
           </div>
         </div>
         <div class="brokerage-item-right">
-          <strong>+30</strong>
-          <span>09-25 12:22</span>
+          <strong v-if="item.b_state=='1'">+{{item.b_Fmoney}}</strong>
+          <strong v-if="item.b_state=='0'">-{{item.b_Fmoney}}</strong>
+          <span>{{item.b_createDate}}</span>
         </div>
       </div>
-      <div class="brokerage-item">
-        <div class="brokerage-item-left">
-          <img src="@/assets/logo.png">
-          <div class="brokerage-item-left-text">
-            <strong>用户昵称</strong>
-            <span>消费1000元</span>
-          </div>
-        </div>
-        <div class="brokerage-item-right">
-          <strong>+30</strong>
-          <span>09-25 12:22</span>
-        </div>
-      </div>
-      <div class="brokerage-item">
-        <div class="brokerage-item-left">
-          <img src="@/assets/logo.png">
-          <div class="brokerage-item-left-text">
-            <strong>用户昵称</strong>
-            <span>消费1000元</span>
-          </div>
-        </div>
-        <div class="brokerage-item-right">
-          <strong>+30</strong>
-          <span>09-25 12:22</span>
-        </div>
-      </div>
-      <div class="brokerage-item">
-        <div class="brokerage-item-left">
-          <img src="@/assets/logo.png">
-          <div class="brokerage-item-left-text">
-            <strong>用户昵称</strong>
-            <span>消费1000元</span>
-          </div>
-        </div>
-        <div class="brokerage-item-right">
-          <strong>+30</strong>
-          <span>09-25 12:22</span>
-        </div>
-      </div>
-      <button class="more-btn">
+      <load-more v-if="nodata" :show-loading="showLoading" tip="暂无数据"></load-more>
+      <button v-if="!nodata" class="more-btn">
         <i class="iconfont icon-unfold"></i>
       </button>
     </div>
@@ -65,6 +28,7 @@
       <span>2、储值金不可兑现</span>
       <span>3、除锅底外全场通用</span>
     </div>
+    <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
   </div>
 </template>
 
@@ -141,15 +105,23 @@
 
 <script>
 import Panel from '@/components/panel'
+import Toast from '@/components/toast'
 import * as my from '@/services/my'
 export default {
   data () {
     return {
-      panelRight: true
+      panelRight: true,
+      brokerageList: [],
+      showToast: true,
+      toastIcon: 'loading',
+      toastText: '正在加载',
+      showLoading: false,
+      nodata: false
     }
   },
   components: {
-    Panel
+    Panel,
+    Toast
   },
   mounted () {
     this.getBrokerageList()
@@ -162,10 +134,17 @@ export default {
       let data = {
         userId: localStorage.id,
         page: '1',
-        jdbz: 'get_order'
+        jdbz: 'get_brokerage_log'
       }
       my.brokerageList(data).then(res => {
         console.log(res)
+        if (res.code == "200") {
+          this.brokerageList = res.data.data
+          this.showToast = false
+        } else {
+          this.showToast = false
+          this.nodata = true
+        }
       })
     }
   }

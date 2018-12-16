@@ -8,6 +8,7 @@ import * as goods from "@/services/goods";
 import * as my from "@/services/my";
 import * as sign from "@/services/sign";
 import * as other from "@/services/other";
+import wx from 'weixin-js-sdk'
 import store from "@/store/store";
 export default {
   data() {
@@ -16,14 +17,15 @@ export default {
     };
   },
   created() {
-    sign
-      .getPic({
-        jdbz: "get_activity"
-      })
-      .then(res => {
-        console.log(res);
-      });
-    // console.log("1321231231321")
+    console.log(wx)
+    console.log(location.href.split('#')[0])
+    // sign
+    //   .getPic({
+    //     jdbz: "get_activity"
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //   });
     other
       .access({
         grant_type: "client_credential",
