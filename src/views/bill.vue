@@ -57,48 +57,53 @@
 </style>
 
 <script>
-import Panel from '@/components/panel'
-import * as recharge from '@/services/recharge'
+import Panel from "@/components/panel";
+import * as recharge from "@/services/recharge";
 export default {
-  data () {
+  data() {
     return {
       panelRight: true,
       list: [],
       money: 0,
       showLoading: false,
       nodata: false
-    }
+    };
   },
   components: {
     Panel
   },
-  mounted () {
-    this.getBillList()
-    this.getPanelMoney()
+  mounted() {
+    this.getBillList();
+    this.getPanelMoney();
   },
   methods: {
-    goWhere (name) {
-      this.$router.push({ name: name })
+    goWhere(name) {
+      this.$router.push({ name: name });
     },
-    getPanelMoney () {
-      this.money = Number(localStorage.u_balance)
+    getPanelMoney() {
+      this.money = Number(localStorage.u_balance);
     },
-    getBillList () {
+    getBillList() {
+      this.$vux.loading.show({
+        text: "正在加载"
+      });
       let data = {
         userId: localStorage.id,
-        page: '1',
-        jdbz: 'get_top_log'
-      }
+        page: "1",
+        jdbz: "get_top_log"
+      };
       recharge.integration(data).then(res => {
-        console.log(res)
+        console.log(res);
         if (res.code == "200") {
-          this.list = res.data.data
+          this.list = res.data.data;
+          this.$vux.loading.hide();
         } else {
-          this.nodata = true
+          this.nodata = true;
+          this.$vux.loading.hide();
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 

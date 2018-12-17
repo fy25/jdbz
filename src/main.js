@@ -6,12 +6,13 @@ import router from './router'
 import { Base } from "@/utils/base";
 import Vuex from "vuex"
 import store from "./store/store"
-import { AlertPlugin, ToastPlugin, LoadMore } from 'vux'
+import { AlertPlugin, ToastPlugin, LoadMore, LoadingPlugin } from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 Vue.component('load-more', LoadMore)
 
-// import './assets/js/rem.js'
+import './assets/js/rem.js'
 import './assets/css/normalize.css'
 import './assets/css/fonts/iconfont.css'
 

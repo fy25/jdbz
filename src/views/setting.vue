@@ -2,7 +2,7 @@
   <div class="setting">
     <!-- <div class="item">修改密码</div> -->
     <group>
-      <cell title="title" value="value"></cell>
+      <cell title="修改密码" link="/personal" is-link></cell>
     </group>
     <button class="out" @click="outTap">退出登录</button>
   </div>
@@ -39,6 +39,16 @@ export default {
   components: {
     Cell,
     Group
+  },
+  mounted() {
+    // this.$vux.alert.show({
+    //   title: "请填写登录信息",
+    //   content: ""
+    // });
+
+    // this.$vux.loading.show({
+    //   text: "Loading"
+    // });
   },
   methods: {
     outTap() {

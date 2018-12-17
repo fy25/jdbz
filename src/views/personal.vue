@@ -361,9 +361,9 @@
 </style>
 
 <script>
-import * as my from "@/services/my"
+import * as my from "@/services/my";
 export default {
-  data () {
+  data() {
     return {
       show: true,
       show2: false,
@@ -371,44 +371,44 @@ export default {
       u_balance: "",
       u_integral: "",
       u_img: "",
-      title: '',
-      cont: ''
-    }
+      title: "",
+      cont: ""
+    };
   },
-  mounted () {
-    this.setInfo()
-    this.getActivity()
+  mounted() {
+    this.setInfo();
+    this.getActivity();
     if (!localStorage.id) {
-      this.redirectTo('Login')
+      this.redirectTo("Login");
     }
   },
   methods: {
-    goWhere (name) {
-      this.$router.push({ name: name })
+    goWhere(name) {
+      this.$router.push({ name: name });
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
-    setInfo () {
-      this.u_name = localStorage.u_name
-      this.u_balance = localStorage.u_balance
-      this.u_integral = localStorage.u_integral
-      this.u_img = localStorage.u_img
-      this.id = localStorage.id
+    setInfo() {
+      this.u_name = localStorage.u_name;
+      this.u_balance = localStorage.u_balance;
+      this.u_integral = localStorage.u_integral;
+      this.u_img = localStorage.u_img;
+      this.id = localStorage.id;
     },
     // 获取商家活动
-    getActivity () {
+    getActivity() {
       my.activity({
-        jdbz: 'get_discounts_info'
+        jdbz: "get_discounts_info"
       }).then(res => {
-        if (res.code = "200") {
-          this.title = res.data.data[0].title
-          this.cont = decodeURIComponent(res.data.data[0].cont)
+        if ((res.code = "200")) {
+          this.title = res.data.data[0].title;
+          this.cont = decodeURIComponent(res.data.data[0].cont);
         }
-      })
+      });
     }
-  },
-}
+  }
+};
 </script>
 
 

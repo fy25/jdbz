@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <img src="@/assets/images/logo.png" alt>
+      <!-- <img src="@/assets/images/logo.png" alt> -->
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
@@ -38,75 +38,95 @@
 
 
 <script>
-import { Config } from '@/config/config.js'
-import * as sign from '@/services/sign'
-import Toast from '@/components/toast'
+import { Config } from "@/config/config.js";
+import * as sign from "@/services/sign";
+import Toast from "@/components/toast";
 export default {
-  data () {
+  data() {
     return {
-      logo: '',
+      logo: "",
       u_name: null,
       u_mobile: null,
       u_pas: null,
       userid: 0,
       showToast: false
-    }
+    };
   },
-  mounted () {
+  mounted() {
     // this.logo = Config.logo
-    this.logo = '@/assets/images/poster.jpg'
-
+    this.logo = "@/assets/images/poster.jpg";
+    console.log(window.location);
+    console.log(this.$route.query.userid);
+    if (this.$route.query.userid) {
+      this.userid = this.$route.query.userid;
+    } else {
+      console.log("没有上级");
+    }
   },
   components: {
     Toast
   },
   methods: {
-    goWhere (path) {
-      this.$router.push('/login')
+    goWhere(path) {
+      this.$router.push("/login");
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
     // 注册
-    signUp () {
+    signUp() {
       let data = {
         userid: this.userid,
         u_name: this.u_name,
         u_mobile: this.u_mobile,
         u_pas: this.u_pas,
-        jdbz: 'get_qr_code',
-      }
-      if (!(/^1[34578]\d{9}$/.test(this.u_mobile))) {
-        this.showToast = true
-        this.toastText = "请填写正确手机号"
-        this.toastIcon = "error"
-        setTimeout(() => {
-          this.showToast = false
-        }, 1500)
+        jdbz: "get_qr_code"
+      };
+      if (!/^1[34578]\d{9}$/.test(this.u_mobile)) {
+        this.$vux.toast.show({
+          type: "cancel",
+          text: "手机号不正确",
+          time: 2000
+        });
+      } else if (this.u_pas == null) {
+        this.$vux.toast.show({
+          type: "cancel",
+          text: "请填写密码",
+          time: 2000
+        });
       } else {
+        this.$vux.loading.show({
+          text: "正在注册"
+        });
         sign.signUp(data).then(res => {
-          console.log(res)
           if (res.code == "200") {
-            this.showToast = true
-            this.toastText = "注册成功"
-            this.toastIcon = "success"
+            this.$vux.loading.hide();
+            this.$vux.toast.show({
+              type: "success",
+              text: "注册成功",
+              time: 2000
+            });
             setTimeout(() => {
-              this.showToast = false
-              this.redirectTo('Login')
-            }, 1500)
+              this.redirectTo("Login");
+            }, 2000);
           } else {
-            this.showToast = true
-            this.toastText = res.message
-            this.toastIcon = "error"
-            setTimeout(() => {
-              this.showToast = false
-            }, 1500)
+            this.$vux.loading.hide();
+            this.$vux.toast.show({
+              type: "cancel",
+              text: res.message,
+              time: 2000
+            });
           }
-        })
-
+        });
       }
+    },
+    // 获取参数
+    GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if (r != null) return unescape(r[2]);
+      return null;
     }
   }
-
-}
+};
 </script>

@@ -32,6 +32,7 @@
 .recharge {
   .recharge-tit {
     font-size: 0.28rem;
+    margin: 0.2rem 0;
   }
   .recharge-list {
     display: flex;
@@ -86,6 +87,7 @@
   .recharge-pay {
     display: flex;
     align-items: center;
+    margin: 0.2rem 0;
     span {
       font-size: 0.24rem;
     }

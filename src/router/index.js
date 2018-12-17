@@ -15,6 +15,7 @@ import Poster from '@/views/poster'
 import Payment from '@/views/payment'
 import Test from '@/views/test'
 import Setting from '@/views/setting'
+import Forget from '@/views/forget'
 
 Vue.use(Router)
 
@@ -95,6 +96,11 @@ export default new Router({
       path: '/setting',
       name: 'Setting',
       component: Setting
+    },
+    {
+      path: '/forget',
+      name: 'Forget',
+      component: Forget
     }
   ]
 })

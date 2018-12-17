@@ -1,7 +1,6 @@
 <template>
   <div class="poster">
     <img class="bg" :src="imgSrc">
-    <div>{{imgSrc}}</div>
   </div>
 </template>
 
@@ -30,31 +29,26 @@
 </style>
 
 <script>
-import * as other from "@/services/other"
+import * as other from "@/services/other";
+import { encode } from "punycode";
 export default {
-  data () {
+  data() {
     return {
       imgSrc: null
-    }
+    };
   },
-  mounted () {
-    this.getPic()
+  mounted() {
+    this.getPic();
+    // console.log(this.imgSrc);
   },
   methods: {
-
-    getPic () {
-      // let data = {
-      //   data: 'www.baidu.com',
-      //   jdbz: 'get_q_r_code'
-      // }
-      // other.sharePic(data).then(res => {
-      //   console.log(res)
-      //   this.imgSrc = res
-      // })
-      let imgSrc = 'http://guanchencanyin.com/Api/get_common.ashx?jdbz=get_bj_q_r_code&data=http://guanchencanyin.com/#/&userid=' + localStorage.id
-      this.imgSrc = imgSrc
+    getPic() {
+      let params = "http://guanchencanyin.com/index.html?userid=" + localStorage.id;
+      params = encodeURIComponent(params);
+      let imgSrc = "http://guanchencanyin.com/Api/get_common.ashx?data=" + params + "&jdbz=get_bj_q_r_code";
+      this.imgSrc = imgSrc;
     }
   }
-}
+};
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <img src="@/assets/images/logo.png" alt>
+      <!-- <img src="@/assets/images/logo.png" alt> -->
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
@@ -17,7 +17,7 @@
       <button @click="signIn">登录</button>
     </div>
     <div class="logo-forget">
-      <span @click="forgetTap"> </span>
+      <span @click="forgetTap"></span>
       <span @click="redirectTo('Sign')">快速注册</span>
     </div>
     <Actionsheet v-model="actionShow" :menus="menus" show-cancel></Actionsheet>
@@ -45,10 +45,10 @@
 import { Config } from "@/config/config.js";
 import { Actionsheet } from "vux";
 import { AlertModule } from "vux";
-import Toast from '@/components/toast'
+import Toast from "@/components/toast";
 import * as sign from "@/services/sign";
 export default {
-  data () {
+  data() {
     return {
       logo: "",
       actionShow: false,
@@ -62,23 +62,27 @@ export default {
     Actionsheet,
     Toast
   },
-  mounted () {
+  mounted() {
     this.logo = Config.logo;
+    console.log(localStorage.id);
+    if (localStorage.id) {
+      this.redirectTo("Personal");
+    }
   },
   methods: {
-    navigateTo (name) {
+    navigateTo(name) {
       this.$router.push({ name: name });
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
 
-    forgetTap () {
+    forgetTap() {
       this.actionShow = true;
     },
 
     // 登录
-    signIn () {
+    signIn() {
       let data = {
         u_mobile: this.u_mobile,
         u_pas: this.u_pas,
@@ -92,18 +96,19 @@ export default {
       } else {
         sign.signIn(data).then(res => {
           if (res.code == "200") {
-            this.showToast = true;
-            this.toastText = "登录成功"
-            this.toastIcon = "success"
+            this.$vux.toast.show({
+              type: "success",
+              text: "登录成功",
+              time: 2000
+            });
             setTimeout(() => {
-              this.showToast = false;
-              localStorage.setItem('id', res.data.data[0].id)
-              localStorage.setItem('u_balance', res.data.data[0].u_balance)
-              localStorage.setItem('u_integral', res.data.data[0].u_integral)
-              localStorage.setItem('u_name', res.data.data[0].u_name)
-              localStorage.setItem('u_img', res.data.data[0].u_img)
-              this.redirectTo('Personal')
-            }, 1500)
+              localStorage.setItem("id", res.data.data[0].id);
+              localStorage.setItem("u_balance", res.data.data[0].u_balance);
+              localStorage.setItem("u_integral", res.data.data[0].u_integral);
+              localStorage.setItem("u_name", res.data.data[0].u_name);
+              localStorage.setItem("u_img", res.data.data[0].u_img);
+              this.redirectTo("Personal");
+            }, 2000);
           } else {
             this.$vux.alert.show({
               title: res.message,
