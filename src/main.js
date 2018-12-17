@@ -11,7 +11,7 @@ Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)
 Vue.component('load-more', LoadMore)
 
-import './assets/js/rem.js'
+// import './assets/js/rem.js'
 import './assets/css/normalize.css'
 import './assets/css/fonts/iconfont.css'
 

@@ -1,6 +1,9 @@
 <template>
   <div class="setting">
-    <div class="item">修改密码</div>
+    <!-- <div class="item">修改密码</div> -->
+    <group>
+      <cell title="title" value="value"></cell>
+    </group>
     <button class="out" @click="outTap">退出登录</button>
   </div>
 </template>
@@ -31,17 +34,22 @@
 </style>
 
 <script>
+import { Cell, Group } from "vux";
 export default {
+  components: {
+    Cell,
+    Group
+  },
   methods: {
-    outTap () {
+    outTap() {
       localStorage.clear();
-      this.redirectTo('Login')
+      this.redirectTo("Login");
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
-    },
+    }
   }
-}
+};
 </script>
 
 
