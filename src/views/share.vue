@@ -104,7 +104,8 @@ export default {
   },
   methods: {
     shareTap () {
-      this.popShow = true
+      // this.popShow = true
+      this.goWhere('Select')
     },
     goWhere (name) {
       this.$router.push({ name: name })

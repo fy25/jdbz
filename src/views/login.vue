@@ -14,7 +14,7 @@
           <i class="iconfont icon-lock"></i>
         </div>
       </div>
-      <button @click="signIn">登录</button>
+      <button @click="signIn" class="button">登录</button>
     </div>
     <div class="logo-forget">
       <span @click="forgetTap"></span>

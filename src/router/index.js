@@ -16,6 +16,8 @@ import Payment from '@/views/payment'
 import Test from '@/views/test'
 import Setting from '@/views/setting'
 import Forget from '@/views/forget'
+import Select from '@/views/select'
+import Avatar from '@/views/avatar'
 
 Vue.use(Router)
 
@@ -101,6 +103,16 @@ export default new Router({
       path: '/forget',
       name: 'Forget',
       component: Forget
+    },
+    {
+      path: '/select',
+      name: 'Select',
+      component: Select
+    },
+    {
+      path: '/avatar',
+      name: 'Avatar',
+      component: Avatar
     }
   ]
 })

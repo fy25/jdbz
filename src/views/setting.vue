@@ -2,7 +2,8 @@
   <div class="setting">
     <!-- <div class="item">修改密码</div> -->
     <group>
-      <cell title="修改密码" link="/personal" is-link></cell>
+      <cell title="修改密码" link="/forget" is-link></cell>
+      <cell title="更换头像" link="/avatar" is-link></cell>
     </group>
     <button class="out" @click="outTap">退出登录</button>
   </div>
@@ -40,22 +41,17 @@ export default {
     Cell,
     Group
   },
-  mounted() {
-    // this.$vux.alert.show({
-    //   title: "请填写登录信息",
-    //   content: ""
-    // });
-
-    // this.$vux.loading.show({
-    //   text: "Loading"
-    // });
+  mounted () {
   },
   methods: {
-    outTap() {
+    outTap () {
       localStorage.clear();
       this.redirectTo("Login");
     },
-    redirectTo(name) {
+    navigateTo (name) {
+      this.$router.push({ name: name });
+    },
+    redirectTo (name) {
       this.$router.replace({ name: name });
     }
   }
