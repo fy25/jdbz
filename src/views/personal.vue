@@ -335,11 +335,14 @@
 }
 .personal-ad {
   background-color: #fff;
-  font-size: 0.18rem;
+  font-size: 0.24rem;
   padding: 0.5rem;
   box-sizing: border-box;
   text-align: center;
   color: #ccc;
+  p{
+    margin: 10px 0;
+  }
 }
 
 .slide-fade-enter-active {
