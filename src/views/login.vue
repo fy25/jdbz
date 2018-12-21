@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <!-- <img src="@/assets/images/logo.png" alt> -->
+      <img src="@/assets/images/logo.png" alt>
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
@@ -48,7 +48,7 @@ import { AlertModule } from "vux";
 import Toast from "@/components/toast";
 import * as sign from "@/services/sign";
 export default {
-  data() {
+  data () {
     return {
       logo: "",
       actionShow: false,
@@ -62,7 +62,7 @@ export default {
     Actionsheet,
     Toast
   },
-  mounted() {
+  mounted () {
     this.logo = Config.logo;
     console.log(localStorage.id);
     if (localStorage.id) {
@@ -70,19 +70,19 @@ export default {
     }
   },
   methods: {
-    navigateTo(name) {
+    navigateTo (name) {
       this.$router.push({ name: name });
     },
-    redirectTo(name) {
+    redirectTo (name) {
       this.$router.replace({ name: name });
     },
 
-    forgetTap() {
+    forgetTap () {
       this.actionShow = true;
     },
 
     // 登录
-    signIn() {
+    signIn () {
       let data = {
         u_mobile: this.u_mobile,
         u_pas: this.u_pas,
@@ -95,6 +95,8 @@ export default {
         });
       } else {
         sign.signIn(data).then(res => {
+          console.log(res)
+
           if (res.code == "200") {
             this.$vux.toast.show({
               type: "success",
@@ -102,11 +104,11 @@ export default {
               time: 2000
             });
             setTimeout(() => {
-              localStorage.setItem("id", res.data.data[0].id);
-              localStorage.setItem("u_balance", res.data.data[0].u_balance);
-              localStorage.setItem("u_integral", res.data.data[0].u_integral);
-              localStorage.setItem("u_name", res.data.data[0].u_name);
-              localStorage.setItem("u_img", res.data.data[0].u_img);
+              localStorage.setItem("id", res.data[0].id);
+              localStorage.setItem("u_balance", res.data[0].u_balance);
+              localStorage.setItem("u_integral", res.data[0].u_integral);
+              localStorage.setItem("u_name", res.data[0].u_name);
+              localStorage.setItem("u_img", res.data[0].u_img);
               this.redirectTo("Personal");
             }, 2000);
           } else {

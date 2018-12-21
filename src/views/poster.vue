@@ -32,20 +32,21 @@
 import * as other from "@/services/other";
 import { encode } from "punycode";
 export default {
-  data() {
+  data () {
     return {
       imgSrc: null
     };
   },
-  mounted() {
+  mounted () {
     this.getPic();
-    // console.log(this.imgSrc);
   },
   methods: {
-    getPic() {
+    getPic () {
+      console.log(this.$route.params.id);
       let params = "http://guanchencanyin.com/index.html?userid=" + localStorage.id;
       params = encodeURIComponent(params);
-      let imgSrc = "http://guanchencanyin.com/Api/get_common.ashx?data=" + params + "&jdbz=get_bj_q_r_code";
+      let imgSrc = "http://guanchencanyin.com/Api/get_common.ashx?data=" + params + "&jdbz=get_bj_q_r_code&id=" + this.$route.params.id;
+      console.log(imgSrc)
       this.imgSrc = imgSrc;
     }
   }

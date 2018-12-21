@@ -10,7 +10,7 @@
       >
     </div>
     <div class="btn">
-      <button>保存</button>
+      <button @click="avatarTap">保存</button>
     </div>
   </div>
 </template>
@@ -59,6 +59,9 @@
 </style>
 
 <script>
+import * as bg from "@/services/bg"
+import * as my from "@/services/my"
+import { Config } from "@/config/config"
 export default {
   data () {
     return {
@@ -68,56 +71,100 @@ export default {
   methods: {
     changeImage: function (e) {
       let file = e.target.files[0];
-      console.log(file)
       if (file) {
         this.file = file
-        console.log(this.file)
         let reader = new FileReader()
         let that = this
         reader.readAsDataURL(file)
         reader.onload = function (e) {
           // 这里的this 指向reader
+          // that.upLoad(e.target.result)
           that.avatar = this.result
+
         }
       }
     },
-    upload: function () {
-      let files = this.$refs.avatarInput.files
-      let fileData = {}
-      if (files instanceof Array) {
-        fileData = files[0]
-      } else {
-        fileData = this.file
+    // 上传图片
+    upLoad (img) {
+      this.$vux.loading.show({
+        text: "正在上传照片"
+      });
+      let data = {
+        data: img,
+        jdbz: 'uploadImage'
       }
-      // console.log('fileData', typeof fileData, fileData)
-      let data = new FormData()
-      data.append('multfile', fileData)
-      data.append('operaType', this.uploadType)
-      this.$store.dispatch('UPLOAD_HEAD', data)
-        .then(res => {
-          console.log(res)
-          this.file = '';
-          let data = res.data.data;
-          this.$emit("upload", data);
-          this.$message({
+      bg.upLoad(data).then(res => {
+        console.log(res)
+        this.$vux.loading.hide()
+      })
+    },
+
+    // 提交头像
+    avatarTap () {
+      let data = {
+        id: localStorage.id,
+        img: this.avatar,
+        jdbz: 'set_img_url'
+      }
+      this.$vux.loading.show({
+        text: "正在上传"
+      });
+      my.avatar(data).then(res => {
+        if (res.code == "200") {
+          this.$vux.loading.hide()
+          this.$vux.toast.show({
             type: "success",
-            message: "上传成功！"
-          })
-        }).catch(err => {
-          console.log(err)
-          if (err.data.msg) {
-            this.$message({
-              type: "error",
-              message: err.data.msg
-            })
-          } else {
-            this.$message({
-              type: "error",
-              message: "上传失败"
-            })
-          }
-        })
+            text: "上传成功",
+            time: 2000
+          });
+          localStorage.u_img = res.data.data[0].u_img
+        } else {
+          this.$vux.loading.hide()
+          this.$vux.toast.show({
+            type: "warn",
+            text: res.message,
+            time: 2000
+          });
+        }
+      })
     }
+    // upload: function () {
+    //   let files = this.$refs.avatarInput.files
+    //   let fileData = {}
+    //   if (files instanceof Array) {
+    //     fileData = files[0]
+    //   } else {
+    //     fileData = this.file
+    //   }
+    //   // console.log('fileData', typeof fileData, fileData)
+    //   let data = new FormData()
+    //   data.append('multfile', fileData)
+    //   data.append('operaType', this.uploadType)
+    //   this.$store.dispatch('UPLOAD_HEAD', data)
+    //     .then(res => {
+    //       console.log(res)
+    //       this.file = '';
+    //       let data = res.data.data;
+    //       this.$emit("upload", data);
+    //       this.$message({
+    //         type: "success",
+    //         message: "上传成功！"
+    //       })
+    //     }).catch(err => {
+    //       console.log(err)
+    //       if (err.data.msg) {
+    //         this.$message({
+    //           type: "error",
+    //           message: err.data.msg
+    //         })
+    //       } else {
+    //         this.$message({
+    //           type: "error",
+    //           message: "上传失败"
+    //         })
+    //       }
+    //     })
+    // }
   }
 }
 </script>

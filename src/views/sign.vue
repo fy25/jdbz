@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <!-- <img src="@/assets/images/logo.png" alt> -->
+      <img src="@/assets/images/logo.png" alt>
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
@@ -19,11 +19,15 @@
         </div>-->
         <group>
           <x-input title="用户名称" v-model="u_name"></x-input>
-          <x-input title="登录密码" v-model="u_pas"></x-input>
-          <x-input title="手机号" v-model="u_mobile"></x-input>
+          <x-input title="登录密码" v-model="u_pas" type="password"></x-input>
+          <x-input title="手机号" v-model="u_mobile" type="tel" :max="11"></x-input>
           <div class="code">
-            <x-input title="验证码" v-model="u_code"></x-input>
-            <button @click="getCode">发送验证码</button>
+            <x-input title="验证码" v-model="u_code" type="number"></x-input>
+            <button
+              @click="getCode"
+              :disabled="disabled"
+              :style="disabled?'background:#999':''"
+            >发送验证码</button>
           </div>
           <datetime title="生日" :min-year="1950" v-model="u_birthday"></datetime>
           <popup-picker
@@ -88,7 +92,7 @@ import { Group } from "vux";
 import { PopupPicker } from "vux";
 import { XInput } from "vux";
 export default {
-  data() {
+  data () {
     return {
       logo: "",
       u_name: null,
@@ -108,10 +112,11 @@ export default {
           name: "女士",
           value: "0"
         }
-      ]
+      ],
+      disabled: false
     };
   },
-  mounted() {
+  mounted () {
     this.logo = Config.logo;
     this.logo = "@/assets/images/poster.jpg";
     if (this.$route.query.userid) {
@@ -128,24 +133,39 @@ export default {
     XInput
   },
   methods: {
-    goWhere(path) {
+    goWhere (path) {
       this.$router.push("/login");
     },
-    redirectTo(name) {
+    redirectTo (name) {
       this.$router.replace({ name: name });
     },
     // 获取验证码
-    getCode() {
+    getCode () {
       let data = {
+        u_type: '1',
         u_mobile: this.u_mobile,
         jdbz: "get_mobile_is_code"
       };
       code.getCode(data).then(res => {
         console.log(res);
+        if (res.code == "200") {
+          this.$vux.toast.show({
+            type: "success",
+            text: "已发送",
+            time: 2000
+          });
+          this.disabled = true
+        } else {
+          this.$vux.toast.show({
+            type: "warn",
+            text: res.message,
+            time: 2000
+          });
+        }
       });
     },
     // 注册
-    signUp() {
+    signUp () {
       let data = {
         userid: this.userid,
         u_name: this.u_name,
@@ -153,49 +173,50 @@ export default {
         u_pas: this.u_pas,
         jdbz: "get_qr_code",
         u_birthday: this.u_birthday,
-        u_sex: this.u_sex[0]
+        u_sex: this.u_sex[0],
+        u_code: this.u_code
       };
       console.log(data);
-      // if (!/^1[34578]\d{9}$/.test(this.u_mobile)) {
-      //   this.$vux.toast.show({
-      //     type: "cancel",
-      //     text: "手机号不正确",
-      //     time: 2000
-      //   });
-      // } else if (this.u_pas == null) {
-      //   this.$vux.toast.show({
-      //     type: "cancel",
-      //     text: "请填写密码",
-      //     time: 2000
-      //   });
-      // } else {
-      //   this.$vux.loading.show({
-      //     text: "正在注册"
-      //   });
-      //   sign.signUp(data).then(res => {
-      //     if (res.code == "200") {
-      //       this.$vux.loading.hide();
-      //       this.$vux.toast.show({
-      //         type: "success",
-      //         text: "注册成功",
-      //         time: 2000
-      //       });
-      //       setTimeout(() => {
-      //         this.redirectTo("Login");
-      //       }, 2000);
-      //     } else {
-      //       this.$vux.loading.hide();
-      //       this.$vux.toast.show({
-      //         type: "cancel",
-      //         text: res.message,
-      //         time: 2000
-      //       });
-      //     }
-      //   });
-      // }
+      if (!/^1[34578]\d{9}$/.test(this.u_mobile)) {
+        this.$vux.toast.show({
+          type: "cancel",
+          text: "手机号不正确",
+          time: 2000
+        });
+      } else if (this.u_pas == null || this.u_name == null || this.u_birthday == null || this.u_sex == [] || this.u_code == null) {
+        this.$vux.toast.show({
+          type: "cancel",
+          text: "请填写完整信息",
+          time: 2000
+        });
+      } else {
+        this.$vux.loading.show({
+          text: "正在注册"
+        });
+        sign.signUp(data).then(res => {
+          if (res.code == "200") {
+            this.$vux.loading.hide();
+            this.$vux.toast.show({
+              type: "success",
+              text: "注册成功",
+              time: 2000
+            });
+            setTimeout(() => {
+              this.redirectTo("Login");
+            }, 2000);
+          } else {
+            this.$vux.loading.hide();
+            this.$vux.toast.show({
+              type: "cancel",
+              text: res.message,
+              time: 2000
+            });
+          }
+        });
+      }
     },
     // 获取参数
-    GetQueryString(name) {
+    GetQueryString (name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);

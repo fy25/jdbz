@@ -9,14 +9,14 @@
         @click="chooseTap(item.id)"
       >
         <div class="select-item-wrapper">
-          <img src="../../static/images/1.jpg" alt>
+          <img :src="server+item.b_img">
           <div class="cur" v-if="item.id==cur">
             <icon type="success"></icon>
           </div>
         </div>
       </div>
     </div>
-    <div class="btn" @click="goPost('Poster',1)">
+    <div class="btn" @click="goPost('Poster')">
       <x-button text="确定"></x-button>
     </div>
   </div>
@@ -77,56 +77,55 @@
 import { Icon } from "vux";
 import { XButton } from "vux";
 import * as bg from "@/services/bg";
+import { Config } from "@/config/config"
 export default {
-  data() {
+  data () {
     return {
-      list: [
-        {
-          img: "../../static/images/1.jpg",
-          id: 1
-        },
-        {
-          img: "../../static/images/1.jpg",
-          id: 2
-        },
-        {
-          img: "../../static/images/1.jpg",
-          id: 3
-        },
-        {
-          img: "../../static/images/1.jpg",
-          id: 4
-        }
-      ],
-      cur: 1
+      list: [],
+      cur: 1,
+      server: Config.server,
+      id: 0
     };
   },
   components: {
     Icon,
     XButton
   },
+  mounted () {
+    this.getBg()
+  },
   methods: {
-    navigateTo(name) {
+    navigateTo (name) {
       this.$router.push({ name: name });
     },
-    redirectTo(name) {
+    redirectTo (name) {
       this.$router.replace({ name: name });
     },
-    chooseTap(cur) {
+    chooseTap (cur) {
       this.cur = cur;
+      this.id = cur
     },
-    goPost(name, id) {
+    goPost (name) {
       this.$router.push({
         name: name,
         params: {
-          id: id
+          id: this.id
         }
       });
     },
     // 获取图片模板
-    getBg() {
+    getBg () {
+      this.$vux.loading.show({
+        text: "正在加载"
+      });
       bg.getBg({ jdbz: "get_backdrop" }).then(res => {
-        console.log(res);
+        if (res.code == "200") {
+          this.list = res.data.data
+          this.id = res.data.data[0].id
+          this.$vux.loading.hide()
+        } else {
+          this.$vux.loading.hide()
+        }
       });
     }
   }
