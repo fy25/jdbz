@@ -13,6 +13,7 @@ Vue.use(LoadingPlugin)
 Vue.component('load-more', LoadMore)
 
 import './assets/js/rem.js'
+// import './assets/js/forbidden.js'
 import './assets/css/normalize.css'
 import './assets/css/fonts/iconfont.css'
 

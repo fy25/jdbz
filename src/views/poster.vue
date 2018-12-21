@@ -39,6 +39,10 @@ export default {
   },
   mounted () {
     this.getPic();
+    this.$vux.alert.show({
+      title: "温馨提示",
+      content: "长按图片可保存图片或直接分享给好友注册，开始赚钱吧！"
+    });
   },
   methods: {
     getPic () {

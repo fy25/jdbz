@@ -3,7 +3,7 @@
     <div class="personal-panel">
       <div class="personal-panel-left">
         <img v-if="u_img==''" src="@/assets/images/avatar.jpg" alt>
-        <img v-else :src="u_img" alt>
+        <img v-else :src="server+u_img" alt>
         <div>
           <strong>{{u_name}}</strong>
         </div>
@@ -170,6 +170,7 @@
 
 <script>
 import { Toast } from "vux";
+import { Config } from "@/config/config"
 import * as my from '@/services/my'
 export default {
   data () {
@@ -183,7 +184,8 @@ export default {
       u_name: "",
       u_img: "",
       showLoading: false,
-      nodata: false
+      nodata: false,
+      server: Config.server
     };
   },
   components: {

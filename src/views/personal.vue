@@ -380,9 +380,9 @@ export default {
   mounted () {
     this.setInfo();
     this.getActivity();
-    // if (!localStorage.id) {
-    //   this.redirectTo("Login");
-    // }
+    if (!localStorage.id) {
+      this.redirectTo("Login");
+    }
   },
   methods: {
     goWhere (name) {

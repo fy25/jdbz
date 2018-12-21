@@ -2,11 +2,11 @@
   <div>
     <group>
       <div class="code">
-        <x-input title="手机号" v-model="u_mobile"></x-input>
+        <x-input title="手机号" v-model="u_mobile" type="tel"></x-input>
         <button @click="getCode">发送验证码</button>
       </div>
-      <x-input title="验证码" v-model="u_code"></x-input>
-      <x-input title="新密码" v-model="u_pas"></x-input>
+      <x-input title="验证码" v-model="u_code" type="number"></x-input>
+      <x-input title="新密码" v-model="u_pas" type="password"></x-input>
     </group>
     <div class="btn">
       <button @click="changePas">完成</button>
@@ -92,6 +92,12 @@ export default {
         }
       });
     },
+    navigateTo (name) {
+      this.$router.push({ name: name });
+    },
+    redirectTo (name) {
+      this.$router.replace({ name: name });
+    },
 
     // 修改密码
     changePas () {
@@ -108,6 +114,10 @@ export default {
             text: "修改成功",
             time: 2000
           });
+          setTimeout(() => {
+            localStorage.clear();
+            this.redirectTo("Login");
+          }, 2000)
         } else {
           this.$vux.toast.show({
             type: "warn",

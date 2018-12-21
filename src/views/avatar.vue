@@ -84,6 +84,13 @@ export default {
         }
       }
     },
+
+    navigateTo (name) {
+      this.$router.push({ name: name });
+    },
+    redirectTo (name) {
+      this.$router.replace({ name: name });
+    },
     // 上传图片
     upLoad (img) {
       this.$vux.loading.show({
@@ -118,6 +125,7 @@ export default {
             time: 2000
           });
           localStorage.u_img = res.data.data[0].u_img
+          this.redirectTo('Personal')
         } else {
           this.$vux.loading.hide()
           this.$vux.toast.show({
@@ -128,43 +136,6 @@ export default {
         }
       })
     }
-    // upload: function () {
-    //   let files = this.$refs.avatarInput.files
-    //   let fileData = {}
-    //   if (files instanceof Array) {
-    //     fileData = files[0]
-    //   } else {
-    //     fileData = this.file
-    //   }
-    //   // console.log('fileData', typeof fileData, fileData)
-    //   let data = new FormData()
-    //   data.append('multfile', fileData)
-    //   data.append('operaType', this.uploadType)
-    //   this.$store.dispatch('UPLOAD_HEAD', data)
-    //     .then(res => {
-    //       console.log(res)
-    //       this.file = '';
-    //       let data = res.data.data;
-    //       this.$emit("upload", data);
-    //       this.$message({
-    //         type: "success",
-    //         message: "上传成功！"
-    //       })
-    //     }).catch(err => {
-    //       console.log(err)
-    //       if (err.data.msg) {
-    //         this.$message({
-    //           type: "error",
-    //           message: err.data.msg
-    //         })
-    //       } else {
-    //         this.$message({
-    //           type: "error",
-    //           message: "上传失败"
-    //         })
-    //       }
-    //     })
-    // }
   }
 }
 </script>

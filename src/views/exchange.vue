@@ -41,6 +41,7 @@
 .recharge {
   .recharge-tit {
     font-size: 0.28rem;
+    margin: 10px 0;
   }
   .recharge-list {
     display: flex;
