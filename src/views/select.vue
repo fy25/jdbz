@@ -74,56 +74,63 @@
 
 
 <script>
-import { Icon } from 'vux'
-import { XButton } from 'vux'
+import { Icon } from "vux";
+import { XButton } from "vux";
+import * as bg from "@/services/bg";
 export default {
-  data () {
+  data() {
     return {
       list: [
         {
-          img: '../../static/images/1.jpg',
+          img: "../../static/images/1.jpg",
           id: 1
         },
         {
-          img: '../../static/images/1.jpg',
+          img: "../../static/images/1.jpg",
           id: 2
         },
         {
-          img: '../../static/images/1.jpg',
+          img: "../../static/images/1.jpg",
           id: 3
         },
         {
-          img: '../../static/images/1.jpg',
+          img: "../../static/images/1.jpg",
           id: 4
-        },
+        }
       ],
       cur: 1
-    }
+    };
   },
   components: {
     Icon,
     XButton
   },
   methods: {
-    navigateTo (name) {
+    navigateTo(name) {
       this.$router.push({ name: name });
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
-    chooseTap (cur) {
-      this.cur = cur
+    chooseTap(cur) {
+      this.cur = cur;
     },
-    goPost (name, id) {
+    goPost(name, id) {
       this.$router.push({
         name: name,
         params: {
           id: id
         }
       });
+    },
+    // 获取图片模板
+    getBg() {
+      bg.getBg({ jdbz: "get_backdrop" }).then(res => {
+        console.log(res);
+      });
     }
   }
-}
+};
 </script>
 
 

@@ -1,27 +1,29 @@
 <template>
   <div>
     <div class="logo-wrapper">
-      <img src="@/assets/images/logo.png" alt>
+      <!-- <img src="@/assets/images/logo.png" alt> -->
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
-        <div class="sign-input-item">
+        <!-- <div class="sign-input-item">
           <input type="text" placeholder="用户名称" v-model="u_name">
           <i class="iconfont icon-email"></i>
         </div>
-        <!-- <div class="sign-input-item">
+        <div class="sign-input-item">
           <input type="tel" placeholder="联系方式" v-model="u_mobile" maxlength="11">
           <i class="iconfont icon-contacts"></i>
-        </div>-->
+        </div>
         <div class="sign-input-item noborder">
           <input type="password" placeholder="登录密码" v-model="u_pas">
           <i class="iconfont icon-lock"></i>
-        </div>
+        </div>-->
         <group>
+          <x-input title="用户名称" v-model="u_name"></x-input>
+          <x-input title="登录密码" v-model="u_pas"></x-input>
           <x-input title="手机号" v-model="u_mobile"></x-input>
           <div class="code">
             <x-input title="验证码" v-model="u_code"></x-input>
-            <button>发送验证码</button>
+            <button @click="getCode">发送验证码</button>
           </div>
           <datetime title="生日" :min-year="1950" v-model="u_birthday"></datetime>
           <popup-picker
@@ -55,6 +57,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-top: 1px solid #eee;
   button {
     position: absolute;
     right: 0;
@@ -77,36 +80,39 @@
 <script>
 import { Config } from "@/config/config.js";
 import * as sign from "@/services/sign";
+import * as code from "@/services/code";
+
 import Toast from "@/components/toast";
-import { Datetime } from 'vux'
-import { Group } from 'vux'
-import { PopupPicker } from 'vux'
+import { Datetime } from "vux";
+import { Group } from "vux";
+import { PopupPicker } from "vux";
 import { XInput } from "vux";
 export default {
-  data () {
+  data() {
     return {
       logo: "",
       u_name: null,
       u_mobile: null,
       u_pas: null,
-      u_code:null,
+      u_code: null,
       userid: 0,
       showToast: false,
       u_birthday: null,
       u_sex: [],
       sexList: [
         {
-          name: '男士',
-          value: '1',
+          name: "男士",
+          value: "1"
         },
         {
-          name: '女士',
-          value: '0',
-        }]
+          name: "女士",
+          value: "0"
+        }
+      ]
     };
   },
-  mounted () {
-    this.logo = Config.logo
+  mounted() {
+    this.logo = Config.logo;
     this.logo = "@/assets/images/poster.jpg";
     if (this.$route.query.userid) {
       this.userid = this.$route.query.userid;
@@ -122,14 +128,24 @@ export default {
     XInput
   },
   methods: {
-    goWhere (path) {
+    goWhere(path) {
       this.$router.push("/login");
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
+    // 获取验证码
+    getCode() {
+      let data = {
+        u_mobile: this.u_mobile,
+        jdbz: "get_mobile_is_code"
+      };
+      code.getCode(data).then(res => {
+        console.log(res);
+      });
+    },
     // 注册
-    signUp () {
+    signUp() {
       let data = {
         userid: this.userid,
         u_name: this.u_name,
@@ -139,7 +155,7 @@ export default {
         u_birthday: this.u_birthday,
         u_sex: this.u_sex[0]
       };
-      console.log(data)
+      console.log(data);
       // if (!/^1[34578]\d{9}$/.test(this.u_mobile)) {
       //   this.$vux.toast.show({
       //     type: "cancel",
@@ -179,7 +195,7 @@ export default {
       // }
     },
     // 获取参数
-    GetQueryString (name) {
+    GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);
