@@ -44,6 +44,7 @@
     </div>
     <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
     <p @click="redirectTo('Login')" class="small-text">已有账号，登录</p>
+    <span>测试版本：{{userid}}</span>
   </div>
 </template>
 

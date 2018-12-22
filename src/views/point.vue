@@ -18,9 +18,8 @@
     </div>
     <div class="recharge-tips">
       <p>温馨提示：</p>
-      <span>1、仅限堂食</span>
-      <span>2、储值金不可兑现</span>
-      <span>3、除锅底外全场通用</span>
+      <span>1、每成功邀请一名好友都可得到10个积分，积分可免费兑换菜品，每桌每次消费都可兑换最多3道任意菜品</span>
+      <span>2、仅限堂食</span>
     </div>
   </div>
 </template>
@@ -73,48 +72,48 @@
 </style>
 
 <script>
-import Panel from '@/components/panel'
-import * as recharge from "@/services/recharge"
+import Panel from "@/components/panel";
+import * as recharge from "@/services/recharge";
 export default {
-  data () {
+  data() {
     return {
       panelRight: true,
       pointList: [],
       money: 0,
       showLoading: false,
       nodata: false
-    }
+    };
   },
   components: {
     Panel
   },
-  mounted () {
-    this.getPointList()
-    this.getPanelMoney()
+  mounted() {
+    this.getPointList();
+    this.getPanelMoney();
   },
   methods: {
-    goWhere (name) {
-      this.$router.push({ name: name })
+    goWhere(name) {
+      this.$router.push({ name: name });
     },
-    getPointList () {
+    getPointList() {
       let data = {
         userId: localStorage.id,
-        page: '1',
-        jdbz: 'get_integral'
-      }
+        page: "1",
+        jdbz: "get_integral"
+      };
       recharge.integration(data).then(res => {
-        console.log(res)
+        console.log(res);
         if (res.code == "200") {
-          this.pointList = res.data.data
+          this.pointList = res.data.data;
         } else {
-          this.nodata = true
+          this.nodata = true;
         }
-      })
+      });
     },
-    getPanelMoney () {
-      this.money = Number(localStorage.u_integral)
-    },
+    getPanelMoney() {
+      this.money = Number(localStorage.u_integral);
+    }
   }
-}
+};
 </script>
 

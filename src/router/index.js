@@ -22,7 +22,7 @@ import Avatar from '@/views/avatar'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  mode: 'history',
   routes: [
     {
       path: '/',
