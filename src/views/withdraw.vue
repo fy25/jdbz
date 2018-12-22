@@ -9,7 +9,7 @@
         <strong>提现金额</strong>
         <div class="withdraw-panel-content-input">
           <span>￥</span>
-          <input type="number" name placeholder="提现金额" v-model="money">
+          <input type="text" name placeholder="提现金额" v-model="money">
         </div>
         <!-- <div class="withdraw-panel-content-bottom">
           <span>本次可提现￥1000.00，</span>

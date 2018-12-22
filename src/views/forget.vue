@@ -5,7 +5,7 @@
         <x-input title="手机号" v-model="u_mobile" type="tel"></x-input>
         <button @click="getCode">发送验证码</button>
       </div>
-      <x-input title="验证码" v-model="u_code" type="number"></x-input>
+      <x-input title="验证码" v-model="u_code" type="tel"></x-input>
       <x-input title="新密码" v-model="u_pas" type="password"></x-input>
     </group>
     <div class="btn">

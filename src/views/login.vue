@@ -17,7 +17,7 @@
       <button @click="signIn" class="button">登录</button>
     </div>
     <div class="logo-forget">
-      <span @click="forgetTap"></span>
+      <span @click="navigateTo('Forget')">忘记密码</span>
       <span @click="redirectTo('Sign')">快速注册</span>
     </div>
     <Actionsheet v-model="actionShow" :menus="menus" show-cancel></Actionsheet>

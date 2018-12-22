@@ -7,16 +7,16 @@
       <div class="sign-input-wrapper">
         <group>
           <x-input title="用户名称" v-model="u_name"></x-input>
-          <x-input title="登录密码" v-model="u_pas" type="password"></x-input>
           <x-input title="手机号" v-model="u_mobile" type="tel" :max="11"></x-input>
           <div class="code">
-            <x-input title="验证码" v-model="u_code" type="number"></x-input>
+            <x-input title="验证码" v-model="u_code" type="tel"></x-input>
             <button
               @click="getCode"
               :disabled="disabled"
               :style="disabled?'background:#999':''"
             >发送验证码</button>
           </div>
+          <x-input title="登录密码" v-model="u_pas" type="password"></x-input>
           <datetime title="生日" :min-year="1950" v-model="u_birthday"></datetime>
           <popup-picker
             title="性别"
@@ -81,7 +81,7 @@ import { Group } from "vux";
 import { PopupPicker } from "vux";
 import { XInput } from "vux";
 export default {
-  data() {
+  data () {
     return {
       logo: "",
       u_name: null,
@@ -105,7 +105,7 @@ export default {
       disabled: false
     };
   },
-  mounted() {
+  mounted () {
     this.logo = Config.logo;
     this.logo = "@/assets/images/poster.jpg";
     if (location.search) {
@@ -125,14 +125,14 @@ export default {
     XInput
   },
   methods: {
-    goWhere(path) {
+    goWhere (path) {
       this.$router.push("/login");
     },
-    redirectTo(name) {
+    redirectTo (name) {
       this.$router.replace({ name: name });
     },
     // 获取验证码
-    getCode() {
+    getCode () {
       let data = {
         u_type: "1",
         u_mobile: this.u_mobile,
@@ -157,7 +157,7 @@ export default {
       });
     },
     // 注册
-    signUp() {
+    signUp () {
       let data = {
         userid: this.userid,
         u_name: this.u_name,
@@ -173,6 +173,12 @@ export default {
         this.$vux.toast.show({
           type: "cancel",
           text: "手机号不正确",
+          time: 2000
+        });
+      } else if (this.u_name == null || this.u_pas == null || this.u_birthday == null || this.u_sex[0] == undefined || this.u_code == null) {
+        this.$vux.toast.show({
+          type: "cancel",
+          text: "请填写完整信息",
           time: 2000
         });
       } else {
@@ -202,7 +208,7 @@ export default {
       }
     },
     // 获取参数
-    GetQueryString(name) {
+    GetQueryString (name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);
