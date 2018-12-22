@@ -5,18 +5,6 @@
     </div>
     <div class="sign-input">
       <div class="sign-input-wrapper">
-        <!-- <div class="sign-input-item">
-          <input type="text" placeholder="用户名称" v-model="u_name">
-          <i class="iconfont icon-email"></i>
-        </div>
-        <div class="sign-input-item">
-          <input type="tel" placeholder="联系方式" v-model="u_mobile" maxlength="11">
-          <i class="iconfont icon-contacts"></i>
-        </div>
-        <div class="sign-input-item noborder">
-          <input type="password" placeholder="登录密码" v-model="u_pas">
-          <i class="iconfont icon-lock"></i>
-        </div>-->
         <group>
           <x-input title="用户名称" v-model="u_name"></x-input>
           <x-input title="登录密码" v-model="u_pas" type="password"></x-input>
@@ -44,7 +32,6 @@
     </div>
     <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
     <p @click="redirectTo('Login')" class="small-text">已有账号，登录</p>
-    <span>测试版本：{{userid}}</span>
   </div>
 </template>
 
@@ -56,6 +43,7 @@
   font-size: 0.25rem;
   color: #999;
   margin-top: 60px;
+  padding-bottom: 20px;
 }
 .code {
   position: relative;
@@ -93,7 +81,7 @@ import { Group } from "vux";
 import { PopupPicker } from "vux";
 import { XInput } from "vux";
 export default {
-  data () {
+  data() {
     return {
       logo: "",
       u_name: null,
@@ -117,13 +105,16 @@ export default {
       disabled: false
     };
   },
-  mounted () {
+  mounted() {
     this.logo = Config.logo;
     this.logo = "@/assets/images/poster.jpg";
-    if (this.$route.query.userid) {
-      this.userid = this.$route.query.userid;
+    if (location.search) {
+      console.log(location.search, "有参数");
+      let userid = location.search.substring(8);
+      console.log(userid);
+      this.userid = location.search.substring(8);
     } else {
-      console.log("没有上级");
+      console.log("没参数");
     }
   },
   components: {
@@ -134,16 +125,16 @@ export default {
     XInput
   },
   methods: {
-    goWhere (path) {
+    goWhere(path) {
       this.$router.push("/login");
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
     // 获取验证码
-    getCode () {
+    getCode() {
       let data = {
-        u_type: '1',
+        u_type: "1",
         u_mobile: this.u_mobile,
         jdbz: "get_mobile_is_code"
       };
@@ -155,7 +146,7 @@ export default {
             text: "已发送",
             time: 2000
           });
-          this.disabled = true
+          this.disabled = true;
         } else {
           this.$vux.toast.show({
             type: "warn",
@@ -166,7 +157,7 @@ export default {
       });
     },
     // 注册
-    signUp () {
+    signUp() {
       let data = {
         userid: this.userid,
         u_name: this.u_name,
@@ -182,12 +173,6 @@ export default {
         this.$vux.toast.show({
           type: "cancel",
           text: "手机号不正确",
-          time: 2000
-        });
-      } else if (this.u_pas == null || this.u_name == null || this.u_birthday == null || this.u_sex == [] || this.u_code == null) {
-        this.$vux.toast.show({
-          type: "cancel",
-          text: "请填写完整信息",
           time: 2000
         });
       } else {
@@ -217,7 +202,7 @@ export default {
       }
     },
     // 获取参数
-    GetQueryString (name) {
+    GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);

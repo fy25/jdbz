@@ -23,10 +23,9 @@
       </button>
     </div>
     <div class="recharge-tips">
-      <p>温馨提示：</p>
-      <span>1、仅限堂食</span>
-      <span>2、储值金不可兑现</span>
-      <span>3、除锅底外全场通用</span>
+      <p>佣金规则：</p>
+      <span>1、分享二维码给B，B到店消费，A提B消费总额的7%；</span>
+      <span>2、B分享给C，C到店消费，B提C消费总额的7%，A提C消费总额的%3</span>
     </div>
     <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
   </div>
@@ -104,50 +103,50 @@
 </style>
 
 <script>
-import Panel from '@/components/panel'
-import Toast from '@/components/toast'
-import * as my from '@/services/my'
+import Panel from "@/components/panel";
+import Toast from "@/components/toast";
+import * as my from "@/services/my";
 export default {
-  data () {
+  data() {
     return {
       panelRight: true,
       brokerageList: [],
       showToast: true,
-      toastIcon: 'loading',
-      toastText: '正在加载',
+      toastIcon: "loading",
+      toastText: "正在加载",
       showLoading: false,
       nodata: false
-    }
+    };
   },
   components: {
     Panel,
     Toast
   },
-  mounted () {
-    this.getBrokerageList()
+  mounted() {
+    this.getBrokerageList();
   },
   methods: {
-    goWhere (name) {
-      this.$router.push({ name: name })
+    goWhere(name) {
+      this.$router.push({ name: name });
     },
-    getBrokerageList () {
+    getBrokerageList() {
       let data = {
         userId: localStorage.id,
-        page: '1',
-        jdbz: 'get_brokerage_log'
-      }
+        page: "1",
+        jdbz: "get_brokerage_log"
+      };
       my.brokerageList(data).then(res => {
-        console.log(res)
+        console.log(res);
         if (res.code == "200") {
-          this.brokerageList = res.data.data
-          this.showToast = false
+          this.brokerageList = res.data.data;
+          this.showToast = false;
         } else {
-          this.showToast = false
-          this.nodata = true
+          this.showToast = false;
+          this.nodata = true;
         }
-      })
+      });
     }
   }
-}
+};
 </script>
 
