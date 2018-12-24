@@ -18,8 +18,9 @@
     </div>
     <div class="recharge-tips">
       <p>温馨提示：</p>
-      <span>1、每成功邀请一名好友都可得到10个积分，积分可免费兑换菜品，每桌每次消费都可兑换最多3道任意菜品</span>
-      <span>2、仅限堂食</span>
+      <span>1、A邀请B，A得到5积分，B邀请C，B得到5积分，A得到2积分，每桌每次消费都可兑换最多1道任意菜品</span>
+      <span>2、消费每十元一个积分，不满十元0积分</span>
+      <span>3、仅限堂食</span>
     </div>
   </div>
 </template>
@@ -74,8 +75,9 @@
 <script>
 import Panel from "@/components/panel";
 import * as recharge from "@/services/recharge";
+import * as my from "@/services/my";
 export default {
-  data() {
+  data () {
     return {
       panelRight: true,
       pointList: [],
@@ -87,15 +89,16 @@ export default {
   components: {
     Panel
   },
-  mounted() {
+  mounted () {
     this.getPointList();
     this.getPanelMoney();
+    this.getOther()
   },
   methods: {
-    goWhere(name) {
+    goWhere (name) {
       this.$router.push({ name: name });
     },
-    getPointList() {
+    getPointList () {
       let data = {
         userId: localStorage.id,
         page: "1",
@@ -110,7 +113,18 @@ export default {
         }
       });
     },
-    getPanelMoney() {
+    // 获取积分
+    getOther () {
+      let data = {
+        id: localStorage.id,
+        jdbz: 'get_user_info'
+      }
+      my.getOther(data).then(res => {
+        localStorage.u_integral = res.data.data[0].u_integral
+        this.money = parseInt(res.data.data[0].u_integral)
+      })
+    },
+    getPanelMoney () {
       this.money = Number(localStorage.u_integral);
     }
   }

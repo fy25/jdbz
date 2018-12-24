@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="personal-share">
-      <div class="personal-share-item" @click="goWhere('Share')">
+      <div class="personal-share-item" @click="goWhere('Select')">
         <div class="personal-share-left">
           <div>
             <strong>分享好友</strong>

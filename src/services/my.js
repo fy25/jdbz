@@ -36,8 +36,13 @@ function avatar (params) {
 }
 
 // 修改密码
-function changePas(params) {
+function changePas (params) {
     return Base.post('/Api/activity.ashx', params)
 }
 
-export { changePas,avatar, brokerageList, withdraw, activity, firstDistribution, secondDistribution, orderList }
+// 获取我的积分、余额、佣金
+function getOther (params) {
+    return Base.post('/Api/im_info.ashx', params)
+}
+
+export { changePas, avatar, brokerageList, withdraw, activity, firstDistribution, secondDistribution, orderList, getOther }
