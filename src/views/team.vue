@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="personal-panel-right">
-        <!-- <strong>200.00</strong> -->
+        <strong>{{u_brokerage}}</strong>
         <span>我的佣金</span>
       </div>
     </div>
@@ -20,13 +20,13 @@
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item" v-for="(item,index) in firstList" :key="index">
-          <img :src="item.u_img" alt>
+          <img :src="server+item.u_img" alt>
           <span>{{item.u_name}}</span>
         </div>
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item" v-for="(item,index) in secondList" :key="index">
-          <img :src="item.u_img" alt>
+          <img :src="server+item.u_img" alt>
           <span>{{item.u_name}}</span>
         </div>
       </div>
@@ -170,10 +170,10 @@
 
 <script>
 import { Toast } from "vux";
-import { Config } from "@/config/config"
-import * as my from '@/services/my'
+import { Config } from "@/config/config";
+import * as my from "@/services/my";
 export default {
-  data () {
+  data() {
     return {
       lock: true,
       show: true,
@@ -185,72 +185,83 @@ export default {
       u_img: "",
       showLoading: false,
       nodata: false,
-      server: Config.server
+      server: Config.server,
+      u_brokerage: 0
     };
   },
   components: {
     Toast
   },
-  mounted () {
-    this.getFirstTeam()
-    this.getSecondTeam()
-    this.getPayList()
-    this.getInfo()
+  mounted() {
+    this.getFirstTeam();
+    this.getSecondTeam();
+    this.getPayList();
+    this.getInfo();
+    this.getOther();
   },
   methods: {
-    showTap () {
+    showTap() {
       this.show = true;
     },
     // 一级分销
-    getFirstTeam () {
+    getFirstTeam() {
       let data = {
         userId: localStorage.id,
-        jdbz: 'get_sales_noe'
-      }
+        jdbz: "get_sales_noe"
+      };
       my.firstDistribution(data).then(res => {
         if (res.code == "200") {
-          this.firstList = res.data.data
-
+          this.firstList = res.data.data;
         }
-      })
+      });
     },
     // 二级分销
-    getSecondTeam () {
+    getSecondTeam() {
       let data = {
         userId: localStorage.id,
-        jdbz: 'get_sales_two'
-      }
+        jdbz: "get_sales_two"
+      };
       my.secondDistribution(data).then(res => {
-        console.log(res, '2')
+        console.log(res, "2");
         if (res.code == "200") {
-          this.secondList = res.data.data
+          this.secondList = res.data.data;
         }
-      })
+      });
     },
     // 消费列表
-    getPayList () {
+    getPayList() {
       let data = {
         userId: localStorage.id,
         page: 1,
-        jdbz: 'get_order'
-      }
+        jdbz: "get_order"
+      };
       my.orderList(data).then(res => {
-        console.log(res, '3')
+        console.log(res, "3");
         if (res.code == "200") {
-          if ((res.data.data).length == 0) {
-            this.nodata = true
+          if (res.data.data.length == 0) {
+            this.nodata = true;
           } else {
-            this.list = res.data.data
+            this.list = res.data.data;
           }
         } else {
-          this.nodata = true
+          this.nodata = true;
         }
-      })
+      });
     },
     // 基本信息返回
-    getInfo () {
-      this.u_name = localStorage.u_name,
-        this.u_img = localStorage.u_img
+    getInfo() {
+      (this.u_name = localStorage.u_name), (this.u_img = localStorage.u_img);
+    },
+    // 获取积分
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        // localStorage.u_brokerage = res.data.data[0].u_integral;
+        this.u_brokerage = parseInt(res.data.data[0].u_brokerage);
+      });
     }
   }
 };
