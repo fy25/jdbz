@@ -1,6 +1,6 @@
 <template>
   <div class="brokerage common-container">
-    <Panel :panel-right="panelRight" path="Withdraw" tit="我的佣金（元）" rightTit="提现"></Panel>
+    <Panel :panel-right="panelRight" path="Withdraw" tit="我的佣金（元）" rightTit="提现" :money="money"></Panel>
     <div class="point-list">
       <div class="point-list-tit">佣金记录</div>
       <div class="brokerage-item" v-for="(item,index) in brokerageList" :key="index">
@@ -115,7 +115,8 @@ export default {
       toastIcon: "loading",
       toastText: "正在加载",
       showLoading: false,
-      nodata: false
+      nodata: false,
+      money: 0
     };
   },
   components: {
@@ -124,6 +125,7 @@ export default {
   },
   mounted() {
     this.getBrokerageList();
+    this.getOther();
   },
   methods: {
     goWhere(name) {
@@ -144,6 +146,16 @@ export default {
           this.showToast = false;
           this.nodata = true;
         }
+      });
+    },
+    // 获取佣金
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        this.money = parseInt(res.data.data[0].u_brokerage);
       });
     }
   }
