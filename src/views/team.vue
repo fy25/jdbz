@@ -20,13 +20,13 @@
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item" v-for="(item,index) in firstList" :key="index">
-          <img :src="server+item.u_img" alt>
+          <img :src="server+item.u_img" @click="changeImg(item.id)">
           <span>{{item.u_name}}</span>
         </div>
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item" v-for="(item,index) in secondList" :key="index">
-          <img :src="server+item.u_img" alt>
+          <img :src="server+item.u_img" @click="changeImg(item.id)">
           <span>{{item.u_name}}</span>
         </div>
       </div>
@@ -195,11 +195,15 @@ export default {
   mounted() {
     this.getFirstTeam();
     this.getSecondTeam();
-    this.getPayList();
+    this.getPayList(localStorage.id);
     this.getInfo();
     this.getOther();
   },
   methods: {
+    changeImg(id) {
+      console.log(id);
+      this.getPayList(id);
+    },
     showTap() {
       this.show = true;
     },
@@ -229,9 +233,12 @@ export default {
       });
     },
     // 消费列表
-    getPayList() {
+    getPayList(id) {
+      this.$vux.loading.show({
+        text: "正在获取记录"
+      });
       let data = {
-        userId: localStorage.id,
+        userId: id,
         page: 1,
         jdbz: "get_order"
       };
@@ -240,11 +247,14 @@ export default {
         if (res.code == "200") {
           if (res.data.data.length == 0) {
             this.nodata = true;
+            this.$vux.loading.hide();
           } else {
             this.list = res.data.data;
+            this.$vux.loading.hide();
           }
         } else {
           this.nodata = true;
+          this.$vux.loading.hide();
         }
       });
     },
@@ -259,7 +269,6 @@ export default {
         jdbz: "get_user_info"
       };
       my.getOther(data).then(res => {
-        // localStorage.u_brokerage = res.data.data[0].u_integral;
         this.u_brokerage = parseInt(res.data.data[0].u_brokerage);
       });
     }

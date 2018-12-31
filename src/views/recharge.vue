@@ -1,6 +1,6 @@
 <template>
   <div class="recharge common-container">
-    <Panel :panel-right="panelRight" tit="当前余额（元）"></Panel>
+    <Panel :panel-right="panelRight" tit="当前余额（元）" :money="money"></Panel>
     <p class="recharge-tit">请选择充值金额</p>
     <div class="recharge-list">
       <div class="recharge-item" v-for="(item,index) in rechargeList" :key="index">
@@ -110,40 +110,50 @@
 </style>
 
 <script>
-import Panel from '@/components/panel'
-import * as recharge from "@/services/recharge"
+import Panel from "@/components/panel";
+import * as recharge from "@/services/recharge";
+import * as my from "@/services/my";
 export default {
-  data () {
+  data() {
     return {
       panelRight: false,
       sumNum: 0,
-      rechargeList: [
-      ]
-    }
+      rechargeList: [],
+      money: 0
+    };
   },
   components: {
     Panel
   },
-  mounted () {
-    this.getRechargeMeal()
+  mounted() {
+    this.getRechargeMeal();
+    this.getOther();
   },
   methods: {
-    goWhere (name) {
-      this.$router.push({ name: name })
+    goWhere(name) {
+      this.$router.push({ name: name });
     },
-    getRechargeMeal () {
-      console.log(12321312)
-      recharge.rechargeMeal({ jdbz: 'get_top_up' }).then(res => {
-        console.log(res)
-        this.rechargeList = res.data.data
-      })
+    // 获取余额
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        this.money = parseInt(res.data.data[0].u_balance);
+      });
+    },
+    getRechargeMeal() {
+      recharge.rechargeMeal({ jdbz: "get_top_up" }).then(res => {
+        this.rechargeList = res.data.data;
+      });
     },
 
     // 选择充值金额
-    sumTap (index) {
-      this.sumNum = index
+    sumTap(index) {
+      this.sumNum = index;
     }
   }
-}
+};
 </script>
 

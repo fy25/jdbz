@@ -27,7 +27,6 @@
       <span>1、分享二维码给B，B到店消费，A提B消费总额的7%；</span>
       <span>2、B分享给C，C到店消费，B提C消费总额的7%，A提C消费总额的%3</span>
     </div>
-    <toast v-if="showToast" :text="toastText" :icon="toastIcon"></toast>
   </div>
 </template>
 
@@ -104,24 +103,19 @@
 
 <script>
 import Panel from "@/components/panel";
-import Toast from "@/components/toast";
 import * as my from "@/services/my";
 export default {
   data() {
     return {
       panelRight: true,
       brokerageList: [],
-      showToast: true,
-      toastIcon: "loading",
-      toastText: "正在加载",
       showLoading: false,
       nodata: false,
       money: 0
     };
   },
   components: {
-    Panel,
-    Toast
+    Panel
   },
   mounted() {
     this.getBrokerageList();
@@ -132,6 +126,9 @@ export default {
       this.$router.push({ name: name });
     },
     getBrokerageList() {
+      this.$vux.loading.show({
+        text: "正在获取"
+      });
       let data = {
         userId: localStorage.id,
         page: "1",
@@ -141,10 +138,10 @@ export default {
         console.log(res);
         if (res.code == "200") {
           this.brokerageList = res.data.data;
-          this.showToast = false;
+          this.$vux.loading.hide();
         } else {
-          this.showToast = false;
           this.nodata = true;
+          this.$vux.loading.hide();
         }
       });
     },

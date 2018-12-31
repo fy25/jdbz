@@ -1,6 +1,6 @@
 <template>
   <div class="recharge common-container">
-    <Panel :panel-right="panelRight" tit="当前积分"></Panel>
+    <Panel :panel-right="panelRight" tit="当前积分" :money="money"></Panel>
     <p class="recharge-tit">请选择兑换商品</p>
     <div class="recharge-list">
       <div class="recharge-item" v-for="(item,index) in goodsList" :key="index">
@@ -136,97 +136,109 @@
 </style>
 
 <script>
-import Panel from '@/components/panel'
-import { XDialog } from 'vux'
-import { Config } from '@/config/config'
-import Toast from '@/components/toast'
-import * as goods from '@/services/goods'
+import Panel from "@/components/panel";
+import { XDialog } from "vux";
+import { Config } from "@/config/config";
+import Toast from "@/components/toast";
+import * as goods from "@/services/goods";
+import * as my from "@/services/my";
 export default {
-  data () {
+  data() {
     return {
       panelRight: false,
       sumNum: 0,
       goodsList: [],
       showDialog: false,
       logo: Config.logo,
-      g_integral: '',
-      showToast: false
-    }
+      g_integral: "",
+      showToast: false,
+      money: 0
+    };
   },
   components: {
     Panel,
     XDialog,
     Toast
   },
-  mounted () {
-    this.getGoods()
+  mounted() {
+    this.getGoods();
+    this.getOther();
   },
   methods: {
-    jj () {
-      console.log("出现了")
+    // 获取余额
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        this.money = parseInt(res.data.data[0].u_integral);
+      });
     },
-    bb () {
-      console.log("小时看来")
+    jj() {
+      console.log("出现了");
     },
-    goWhere (name) {
-      this.$router.push({ name: name })
+    bb() {
+      console.log("小时看来");
     },
-    getGoods () {
+    goWhere(name) {
+      this.$router.push({ name: name });
+    },
+    getGoods() {
       let data = {
         page: 1,
-        jdbz: 'get_goods'
-      }
+        jdbz: "get_goods"
+      };
       goods.goodList(data).then(res => {
-        console.log(res)
-        if (res.code = "200") {
-          this.goodsList = res.data.data
-          this.g_integral = this.goodsList[0].g_integral
-          this.id = this.goodsList[0].id
+        console.log(res);
+        if ((res.code = "200")) {
+          this.goodsList = res.data.data;
+          this.g_integral = this.goodsList[0].g_integral;
+          this.id = this.goodsList[0].id;
         }
-      })
+      });
     },
 
     // 选择充值金额
-    sumTap (index, id) {
-      this.sumNum = index
-      this.id = id
-      this.g_integral = this.goodsList[index].g_integral
+    sumTap(index, id) {
+      this.sumNum = index;
+      this.id = id;
+      this.g_integral = this.goodsList[index].g_integral;
     },
 
     // 兑换
-    exchangeTap () {
+    exchangeTap() {
       let data = {
         goodsid: this.id,
         type: 1,
         userid: localStorage.id,
-        jdbz: 'get_exchange_goods'
-      }
+        jdbz: "get_exchange_goods"
+      };
       goods.exchangeGoods(data).then(res => {
-        console.log(res)
+        console.log(res);
         if (res.code == "200") {
-          this.showToast = true
+          this.showToast = true;
           this.toastText = res.message;
           this.toastIcon = "success";
           setTimeout(() => {
-            this.showToast = false
-          }, 1500)
-
+            this.showToast = false;
+          }, 1500);
         } else {
-          this.showToast = true
+          this.showToast = true;
           this.toastText = res.message;
           this.toastIcon = "error";
           setTimeout(() => {
-            this.showToast = false
-          }, 1500)
+            this.showToast = false;
+          }, 1500);
         }
-      })
+      });
     },
 
     // 打开弹窗
-    showTap () {
-      this.showDialog = true
+    showTap() {
+      this.showDialog = true;
     }
   }
-}
+};
 </script>
 

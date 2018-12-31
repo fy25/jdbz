@@ -59,6 +59,7 @@
 <script>
 import Panel from "@/components/panel";
 import * as recharge from "@/services/recharge";
+import * as my from "@/services/my";
 export default {
   data() {
     return {
@@ -74,15 +75,26 @@ export default {
   },
   mounted() {
     this.getBillList();
-    this.getPanelMoney();
+    // this.getPanelMoney();
+    this.getOther();
   },
   methods: {
     goWhere(name) {
       this.$router.push({ name: name });
     },
-    getPanelMoney() {
-      this.money = Number(localStorage.u_balance);
+    // 获取余额
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        this.money = parseInt(res.data.data[0].u_balance);
+      });
     },
+    // getPanelMoney() {
+    //   this.money = Number(localStorage.u_balance);
+    // },
     getBillList() {
       this.$vux.loading.show({
         text: "正在加载"
