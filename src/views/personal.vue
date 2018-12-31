@@ -340,7 +340,7 @@
   box-sizing: border-box;
   text-align: center;
   color: #ccc;
-  p{
+  p {
     margin: 10px 0;
   }
 }
@@ -365,9 +365,9 @@
 
 <script>
 import * as my from "@/services/my";
-import { Config } from "@/config/config"
+import { Config } from "@/config/config";
 export default {
-  data () {
+  data() {
     return {
       show: true,
       show2: false,
@@ -380,21 +380,36 @@ export default {
       server: Config.server
     };
   },
-  mounted () {
+  mounted() {
     this.setInfo();
+    this.getOther();
     this.getActivity();
     if (!localStorage.id) {
       this.redirectTo("Login");
     }
   },
+  beforeDestroy() {
+    this.getOther();
+  },
   methods: {
-    goWhere (name) {
+    // 获取余额
+    getOther() {
+      let data = {
+        id: localStorage.id,
+        jdbz: "get_user_info"
+      };
+      my.getOther(data).then(res => {
+        this.u_integral = parseInt(res.data.data[0].u_integral);
+        this.u_balance = parseInt(res.data.data[0].u_balance);
+      });
+    },
+    goWhere(name) {
       this.$router.push({ name: name });
     },
-    redirectTo (name) {
+    redirectTo(name) {
       this.$router.replace({ name: name });
     },
-    setInfo () {
+    setInfo() {
       this.u_name = localStorage.u_name;
       this.u_balance = localStorage.u_balance;
       this.u_integral = localStorage.u_integral;
@@ -402,7 +417,7 @@ export default {
       this.id = localStorage.id;
     },
     // 获取商家活动
-    getActivity () {
+    getActivity() {
       my.activity({
         jdbz: "get_discounts_info"
       }).then(res => {
