@@ -26,7 +26,7 @@
       </div>
       <div class="team-list-item-container">
         <div class="team-list-item" v-for="(item,index) in secondList" :key="index">
-          <img :src="server+item.u_img" @click="changeImg(item.id)">
+          <img :src="server+item.u_img" @click="getPayList(item.id)">
           <span>{{item.u_name}}</span>
         </div>
       </div>
@@ -193,24 +193,24 @@ export default {
     Toast
   },
   mounted() {
-    this.getFirstTeam();
-    this.getSecondTeam();
+    this.getFirstTeam(localStorage.id);
+    this.getSecondTeam(localStorage.id);
     this.getPayList(localStorage.id);
     this.getInfo();
     this.getOther();
   },
   methods: {
     changeImg(id) {
-      console.log(id);
       this.getPayList(id);
+      this.getsecondTap(id);
     },
     showTap() {
       this.show = true;
     },
     // 一级分销
-    getFirstTeam() {
+    getFirstTeam(id) {
       let data = {
-        userId: localStorage.id,
+        userId: id,
         jdbz: "get_sales_noe"
       };
       my.firstDistribution(data).then(res => {
@@ -219,10 +219,24 @@ export default {
         }
       });
     },
-    // 二级分销
-    getSecondTeam() {
+    // 点击获取二级分销
+    getsecondTap(id) {
       let data = {
-        userId: localStorage.id,
+        userId: id,
+        jdbz: "get_sales_noe"
+      };
+      my.firstDistribution(data).then(res => {
+        if (res.code == "200") {
+          this.secondList = res.data.data;
+        } else {
+          this.secondList = [];
+        }
+      });
+    },
+    // 二级分销
+    getSecondTeam(id) {
+      let data = {
+        userId: id,
         jdbz: "get_sales_two"
       };
       my.secondDistribution(data).then(res => {
