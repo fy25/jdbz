@@ -18,6 +18,7 @@ import Setting from '@/views/setting'
 import Forget from '@/views/forget'
 import Select from '@/views/select'
 import Avatar from '@/views/avatar'
+import Name from '@/views/name'
 
 Vue.use(Router)
 
@@ -113,6 +114,11 @@ export default new Router({
       path: '/avatar',
       name: 'Avatar',
       component: Avatar
+    },
+    {
+      path: '/name',
+      name: 'Name',
+      component: Name
     }
   ]
 })

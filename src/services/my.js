@@ -35,6 +35,12 @@ function avatar (params) {
     return Base.post('/Api/activity.ashx', params)
 }
 
+// 修改昵称
+function name (params) {
+    return Base.post('/Api/activity.ashx', params)
+}
+
+
 // 修改密码
 function changePas (params) {
     return Base.post('/Api/activity.ashx', params)
@@ -45,4 +51,4 @@ function getOther (params) {
     return Base.post('/Api/im_info.ashx', params)
 }
 
-export { changePas, avatar, brokerageList, withdraw, activity, firstDistribution, secondDistribution, orderList, getOther }
+export { changePas, avatar, brokerageList, withdraw, activity, firstDistribution, secondDistribution, orderList, getOther,name }

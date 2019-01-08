@@ -109,6 +109,7 @@ export default {
               localStorage.setItem("u_integral", res.data[0].u_integral);
               localStorage.setItem("u_name", res.data[0].u_name);
               localStorage.setItem("u_img", res.data[0].u_img);
+              localStorage.setItem("u_mobile", this.u_mobile);
               this.redirectTo("Personal");
             }, 2000);
           } else {

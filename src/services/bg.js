@@ -10,8 +10,12 @@ function upLoad (data) {
     return Base.post('/Api/get_common.ashx', data)
 }
 
+// 获取一维码
+function getYw (data) {
+    return Base.get('/Api/get_common.ashx', data)
+}
 
 
 
 
-export { getBg, upLoad }
+export { getBg, upLoad, getYw }

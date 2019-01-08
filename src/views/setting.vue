@@ -4,7 +4,11 @@
     <group>
       <cell title="修改密码" link="/forget" is-link></cell>
       <cell title="更换头像" link="/avatar" is-link></cell>
+      <cell title="更换昵称" link="/name" is-link></cell>
     </group>
+    <div class="ywImg">
+      <img :src="ywImg" alt>
+    </div>
     <button class="out" @click="outTap">退出登录</button>
   </div>
 </template>
@@ -32,18 +36,38 @@
   border: none;
   padding: 10px 60px;
 }
+.ywImg {
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+.ywImg img{
+  width: 70%;
+}
 </style>
 
 <script>
-import { Cell, Group } from "vux";
+import * as bg from "@/services/bg"
+import { Confirm, Cell, Group } from "vux";
 export default {
   components: {
     Cell,
-    Group
+    Group,
+    Confirm
+  },
+  data () {
+    return {
+      ywImg: ''
+    }
   },
   mounted () {
+    this.getYw()
   },
   methods: {
+    // 获取一维码
+    getYw () {
+      this.ywImg = 'http://www.guanchencanyin.com/Api/get_common.ashx?jdbz=get_one_qr_Image&data=' + localStorage.u_mobile
+    },
     outTap () {
       localStorage.clear();
       this.redirectTo("Login");

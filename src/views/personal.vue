@@ -79,7 +79,7 @@
         <i class="iconfont icon-unfold"></i>
       </div>
       <transition name="slide-fade">
-        <div v-if="show" class="personal-activity-content">{{cont}}</div>
+        <div v-if="show" class="personal-activity-content" v-html="cont"></div>
       </transition>
     </div>
     <div class="personal-contact">
@@ -294,6 +294,7 @@
     background-color: #f7f7f7;
     padding: 0.6rem;
     box-sizing: border-box;
+    line-height: 1.5;
   }
 }
 .personal-contact {
