@@ -17,7 +17,7 @@
       <span>支付金额：</span>
       <strong>300元</strong>
     </div>
-    <button class="recharge-btn">立即支付</button>
+    <button class="recharge-btn" @click="pay">立即支付</button>
     <div class="recharge-tips">
       <p>温馨提示：</p>
       <span>1、仅限堂食</span>
@@ -112,9 +112,11 @@
 <script>
 import Panel from "@/components/panel";
 import * as recharge from "@/services/recharge";
+import * as other from "@/services/other";
 import * as my from "@/services/my";
+import wx from 'weixin-js-sdk'
 export default {
-  data() {
+  data () {
     return {
       panelRight: false,
       sumNum: 0,
@@ -125,16 +127,18 @@ export default {
   components: {
     Panel
   },
-  mounted() {
+  mounted () {
     this.getRechargeMeal();
     this.getOther();
+    // console.log(wx)
+    this.setConfig()
   },
   methods: {
-    goWhere(name) {
+    goWhere (name) {
       this.$router.push({ name: name });
     },
     // 获取余额
-    getOther() {
+    getOther () {
       let data = {
         id: localStorage.id,
         jdbz: "get_user_info"
@@ -143,15 +147,47 @@ export default {
         this.money = parseInt(res.data.data[0].u_balance);
       });
     },
-    getRechargeMeal() {
+    getRechargeMeal () {
       recharge.rechargeMeal({ jdbz: "get_top_up" }).then(res => {
         this.rechargeList = res.data.data;
       });
     },
 
     // 选择充值金额
-    sumTap(index) {
+    sumTap (index) {
       this.sumNum = index;
+    },
+
+    // 验证config
+    setConfig () {
+      let data = {
+        jdbz: 'get_secret_id',
+        url: location.href.split('#')[0]
+      }
+      other.setConfig(data).then(res => {
+        console.log(res)
+        wx.config({
+          debug: res.debug,
+          appId: res.appId,
+          timestamp: res.timestamp,
+          nonceStr: res.nonceStr,
+          signature: res.signature,
+          jsApiList: res.jsApiList
+        });
+      })
+    },
+
+    // 下单
+    pay () {
+      console.log("1312312")
+      let data = {
+        userId: '1',
+        top_upid: '1',
+        jdbz: 'set_top_up'
+      }
+      recharge.pay(data).then(res => {
+        console.log(res)
+      })
     }
   }
 };

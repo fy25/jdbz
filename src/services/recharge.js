@@ -15,5 +15,10 @@ function withdraw (data) {
   return Base.post('/Api/im_info.ashx', data)
 }
 
+// 下单拉起支付
+function pay (data) {
+  return Base.post('/WeZ/WeChatPay/Signature.aspx', data)
+}
 
-export { rechargeMeal, integration, withdraw }
+
+export { rechargeMeal, integration, withdraw, pay }

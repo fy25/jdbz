@@ -6,6 +6,7 @@ import router from './router'
 import { Base } from "@/utils/base";
 import Vuex from "vuex"
 import store from "./store/store"
+import wx from 'weixin-js-sdk'
 import { AlertPlugin, ToastPlugin, LoadMore, LoadingPlugin } from 'vux'
 Vue.use(AlertPlugin)
 Vue.use(ToastPlugin)

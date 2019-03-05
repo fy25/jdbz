@@ -12,5 +12,9 @@ function sharePic (data) {
   return Base.get('/Api/get_common.ashx', data)
 }
 
+function setConfig (params) {
+  return Base.post('/Api/WXconfig.ashx', params)
+}
 
-export { access, sharePic }
+
+export { access, sharePic, setConfig }
