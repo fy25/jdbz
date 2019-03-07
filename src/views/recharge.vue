@@ -15,7 +15,7 @@
     </div>
     <div class="recharge-pay">
       <span>支付金额：</span>
-      <strong>300元</strong>
+      <strong>{{rechargeMoney}}元</strong>
     </div>
     <button class="recharge-btn" @click="pay">立即支付</button>
     <div class="recharge-tips">
@@ -114,31 +114,33 @@ import Panel from "@/components/panel";
 import * as recharge from "@/services/recharge";
 import * as other from "@/services/other";
 import * as my from "@/services/my";
-import wx from 'weixin-js-sdk'
+import wx from "weixin-js-sdk";
 export default {
-  data () {
+  data() {
     return {
       panelRight: false,
       sumNum: 0,
       rechargeList: [],
-      money: 0
+      money: 0,
+      rechargeMoney: 0,
+      top_upid: 0
     };
   },
   components: {
     Panel
   },
-  mounted () {
+  mounted() {
     this.getRechargeMeal();
     this.getOther();
-    // console.log(wx)
-    this.setConfig()
+    // this.setConfig();
+    // window.location = "WeZ/CZ_WeiPay.aspx?top_upid=1&userid=9";
   },
   methods: {
-    goWhere (name) {
+    goWhere(name) {
       this.$router.push({ name: name });
     },
     // 获取余额
-    getOther () {
+    getOther() {
       let data = {
         id: localStorage.id,
         jdbz: "get_user_info"
@@ -147,25 +149,30 @@ export default {
         this.money = parseInt(res.data.data[0].u_balance);
       });
     },
-    getRechargeMeal () {
+
+    getRechargeMeal() {
       recharge.rechargeMeal({ jdbz: "get_top_up" }).then(res => {
         this.rechargeList = res.data.data;
+        this.rechargeMoney = res.data.data[0].t_money;
+        this.top_upid = res.data.data[0].id;
       });
     },
 
     // 选择充值金额
-    sumTap (index) {
+    sumTap(index) {
       this.sumNum = index;
+      this.rechargeMoney = this.rechargeList[index].t_money;
+      this.top_upid = this.rechargeList[index].id;
     },
 
     // 验证config
-    setConfig () {
+    setConfig() {
       let data = {
-        jdbz: 'get_secret_id',
-        url: location.href.split('#')[0]
-      }
+        jdbz: "get_secret_id",
+        url: location.href.split("#")[0]
+      };
       other.setConfig(data).then(res => {
-        console.log(res)
+        console.log(res);
         wx.config({
           debug: res.debug,
           appId: res.appId,
@@ -174,20 +181,25 @@ export default {
           signature: res.signature,
           jsApiList: res.jsApiList
         });
-      })
+      });
     },
 
     // 下单
-    pay () {
-      console.log("1312312")
-      let data = {
-        userId: '1',
-        top_upid: '1',
-        jdbz: 'set_top_up'
-      }
-      recharge.pay(data).then(res => {
-        console.log(res)
-      })
+    pay() {
+      // console.log("1312312");
+      // let data = {
+      //   userId: "1",
+      //   top_upid: "1",
+      //   jdbz: "set_top_up"
+      // };
+      // recharge.pay(data).then(res => {
+      //   console.log(res);
+      // });
+      window.location =
+        "WeZ/CZ_WeiPay.aspx?top_upid=" +
+        this.top_upid +
+        "&userid=" +
+        localStorage.getItem("id");
     }
   }
 };
